@@ -1,0 +1,678 @@
+
+\documentclass{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{bbm}
+\usepackage{mathbbol}
+\usepackage[algosection,ruled,lined,linesnumbered,longend]{algorithm2e}
+\usepackage{algorithmic}
+\usepackage{latexsym}
+\usepackage{graphicx,wrapfig,xcolor}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsmath,amssymb,amstext,amsthm}
+
+
+ \newcommand{\comment}[1]{[\begingroup\color{red!60!black}#1\endgroup]
+   \marginpar{\tiny\textsc{{\color{red!60!black} To Do!}}}}
+
+ \newcommand{\interior}{\ensuremath{\mbox{int}}} 
+\newcommand{\cmd}[1]{\ensuremath{\mbox{\bf #1}}} 
+\newcommand{\vio}{\ensuremath{\cmd{violation}}}
+\newcommand{\st}{\ensuremath{\mbox{s.t.}}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\bet}{\begin{table}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\real}{\mathbb{R}} %IMPORTANT
+\newcommand{\htp}{\ensuremath{\mbox{HTP}}}
+\newcommand{\ect}{\ensuremath{\mbox{ECT}}}
+\renewcommand{\H}{\ensuremath{\mathcal{H}}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\C}{\ensuremath{\mathcal{C}}}
+\newcommand{\D}{\ensuremath{\mathcal{D}}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\N}{\mathbb{N}} \newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathbb{T}} \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\0}{\mathbb{0}} 
+\newcommand{\1}{\mathbb{1}} 
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{nmbrs}[theorem]{Numbering}
+\newtheorem{assump}[theorem]{Assumption}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{prob}[theorem]{Problem}
+\newtheorem{lem}[theorem]{Lemma}
+\newtheorem{thm}[theorem]{Theorem}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{rem}[theorem]{Remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conj}[theorem]{Conjecture}
+\newtheorem{alg}[theorem]{Algorithm}
+\newtheorem{ex}[theorem]{Exercise}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{coroll}[theorem]{Corollary}
+\newtheorem{theo}[theorem]{Theorem}
+\newtheorem{defin}[theorem]{Definition}
+\newtheorem{nota}[theorem]{Notation}
+
+\title{Bounding the Integrality Gap of Transversal LPs}
+%\author{}
+%\date{May 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Recall that a graph $H$ is a {\em minor} of $G$, if we can obtain $H$
+from $G$ through a sequence of edge contractions and deletions, and
+vertex deletions. In the {\em $H$-transversal} problem (\htp) one is
+given a graph $G=(V,E)$, non-negative costs $c_v$, for all $v \in V$,
+and a graph $H$. The goal is to find a set $S \subseteq V$ such that
+$G[V\setminus S]$ has no $H$-minor.
+In the following, we let $\H$
+be the set of vertex subsets of $V$ whose induced subgraphs contain an
+$H$-minor; i.e., $S \in \H$ iff $G[S]$ has an $H$-minor. Consider the
+following natural LP relaxation of (\htp):
+
+\begin{align}
+  \min ~~ & c^Tx \tag{$\mbox{P}_{\scriptsize \htp}$}\label{lp:p} \\
+  \st ~~ & x(S) \geq 1 \quad \forall S \in \H \notag \\
+          & x \geq \0. \notag
+\end{align}
+
+It is not hard to see that the integrality gap of the above LP can be
+large, even in special cases. For example, it is large when $H$ is a
+planar graph with at least one cycle as was argued in \cite{BH+19}.
+To see this, let $G$ be an $n$-vertex graph with girth $\Omega(\log n)$
+and treewidth $\Omega(n)$ (e.g., certain Ramanujan graphs
+\cite{Mo94}), and let $H$ be a triangle. Letting $x_v = 1/\log n$ for
+all $v \in V$ is easily seen to yield a feasible solution for
+\eqref{lp:p} of value $n/\log n$. On the other hand, any integral
+solution for the given \htp\ instance has cost $\Omega(n)$ since
+$H$-minor free graphs have treewidth $O(1)$ \cite{BH+19}. 
+
+\section{Hitting even cycles in minor-closed graphs}
+
+Closely related to the above is the 
+{\em even-cycle transversal} problem (\ect) where
+we are given a graph $G=(V,E)$, vertex costs $c_v \geq 0$ for all
+$v \in V$, and where the goal is to find a min-cost set
+$S \subseteq V$ such that $G[V\setminus S]$ has no even cycles. Let
+\C\ be the set of even cycles in $G$. In the following, we will sometimes 
+use $C \in \C$ for the set of vertices of the corresponding cycle; the meaning will be
+clear from the context. 
+The natural LP relaxation of \ect\ and its dual as follows:
+
+\medskip
+
+\hspace*{-.7cm}
+\begin{minipage}{.48\textwidth}
+\begin{align}
+  \min ~~ & c^Tx \tag{$\mbox{P}_{\scriptsize \ect}$} \label{lp:p2} \\
+  \st ~~ & x(C) \geq 1 \quad \forall C\in \C \notag \\
+          & x \geq \0. \notag
+\end{align}
+\end{minipage}
+\hspace*{1ex}
+\vline
+\hspace*{1ex}
+\begin{minipage}{.48\textwidth}
+\begin{align}
+  \max ~~ & \1^Ty \tag{$\mbox{D}_{\scriptsize \ect}$} \label{lp:d2} \\
+  \st ~~ & \sum_{C \in \C, v \in C} y_C \leq c_v \quad \forall v \in V
+           \notag \\
+          & y \geq \0. \notag
+\end{align}
+\end{minipage}
+\medskip
+
+Similar to the previous argument, we can show that \eqref{lp:p2} has
+an integrality gap of $\Omega(\log n)$ in general. 
+We suspect, however, that the LP has integrality gap $O(1)$ when $G$ is from a
+minor-closed class of graphs. We will now show this for the special
+case where $c=\1$. We need the following result due to Fomin, Saurabh,
+and Thilikos \cite{FST11}.
+
+\begin{theorem}\label{thm:fst}
+  Let $\mathcal{G}$ be a proper minor-closed graph class and let $H$ be
+  a planar graph. Then there is
+  \begin{itemize}
+  \item a feasible solution $U \subseteq V$ to \htp\ for $G$ and $H$, and
+  \item a collection $\cal{U}$ of pairwise
+    disjoint vertex subsets of $V$ each of which induces a subgraph of
+    $G$ with an $H$-minor,
+  \end{itemize}
+  and $|U| \leq c|{\cal U}|$ for some constant $c({\cal G},H)$.
+\end{theorem}
+
+We apply Theorem \ref{thm:fst} to the given graph $G$ from some
+minor-closed graph class (e.g., planar), and choose $H$ as 
+the graph on two vertices with three parallel edges. The theorem
+provides us with disjoint sets of vertices $D_1, \ldots, D_p$ such
+that $H$ is a minor in $G[D_i]$, for all $i \in [p]$, and a set $U$ of
+vertices such that $G[V\setminus U]$ has no $H$ minor. We furthermore
+know that $|H| \leq cp$ for some constant $c$.
+
+Note that $G[D_i]$ contains an $H$-minor, and hence there are vertices
+$v_i$ and $u_i$ in $D_i$, and $G[D_i]$ contains three internally
+vertex-disjoint $v_i, u_i$-paths. Clearly, some two of these paths
+together form an even cycle $C_i$. We conclude that letting
+$y_{C_i}=1$ for all $i \in [p]$ yields a feasible solution for
+\eqref{lp:d2}. It is clear that $U$ may not be a feasible even cycle
+transversal in $G$. 
+
+Recall that a {\em block} in $G$ is an inclusion-wise maximal subgraph
+that is either a single vertex, a bridge-edge, or a $2$-vertex
+connected subgraph. We then note that $G':=G[V\setminus U]$ is
+$H$-minor free, and thus a {\em cactus}; i.e., a graph in which every
+block is a simple cycle, or an edge. The {\em block graph} of $G'$ is
+an acyclic bipartite graph with vertex set $B_1 \cup B_2$, where $B_2$
+are the blocks of $G'$, and $B_1$ are the cut-vertices. The block
+graph has an edge connecting each cut vertex with any of its incident
+blocks.
+Let $B'_2 \subseteq B_2$ be the set of block vertices
+that correspond to {\em even} cycles of $G'$. Also let $B'_1 \subseteq B_1$ be
+the cut vertices with at least two neighbours in $B'_2$.  Let $\B$ be
+the subgraph of the block-graph induced by the vertices in
+$B'_1 \cup B'_2$. $\B$ is a forest, and we let $T_1, \ldots, T_l$ be
+its trees. Let $V(T_i)=B'_{i,1} \cup B'_{i,2}$ such that $B'_{i,q}
+\subseteq B'_q$ for all $i \in [l]$, and $q \in \{1,2\}$. 
+
+W.l.o.g., we assume that $T_1,.., T_j$ are those trees in $\B$ that
+have only a single node from $B'_2$ (if no such tree exists, we let $j=0$). 
+For $T_i$ with $i>j$ choose a root $r \in B'_{i,1}$
+and direct the edges of $T_i$ away from $r$. For each node
+$a \in B'_{i,1}$, let $b(a) \in B'_{i,2}$ be an arbitrary descendant
+of $a$ in $T_i$ (such a node exists by the definition of $B'_1$). 
+
+In the following, we abuse notation mildly, and use $b(a)$, for some
+$a \in B'_{i,1}$, in place of the even cycle it represents in $G'$.
+We define a feasible solution $\bar{y}$ for \eqref{lp:d2} by first letting
+$\bar{y}_{b(a)}=1/2$ for all $a \in B'_{j+1,1} \cup \ldots \cup B'_{l,1}$.
+For $i \in \{1, \ldots, j\}$, let $C_i$ be the even cycle
+corresponding to the single $B'_2$-node in $T_i$. We then let
+$\bar{y}_{C_i}=1$, for all $i \in \{1, \ldots, j\}$. 
+Let $\bar{y}_C=0$ for  all other even cycles. We claim that the $\bar{y}$
+constructed is feasible for \eqref{lp:d2}. 
+To see this, note that, by construction, no node $v \in V(G')$ is
+incident to more than two even cycles with positive $\bar{y}$ value. 
+In fact, if $v$ is incident to two even cycles $C_1$ and $C_2$ with
+positive $\bar{y}$ value, then $\bar{y}_{C_1}=\bar{y}_{C_2}=1/2$. 
+
+For each $1 \leq i \leq j$, let $a_i$ be an arbitrary vertex of
+$C_i$. Define
+\[ \bar{U} = \{a_1, \ldots, a_j\} \cup \{ a \in B'_{j+1,1} \cup \ldots
+  \cup B'_{l,1} \,:\, \bar{y}_{b(a)}>0\}, \]
+and note that $U \cup \bar{U}$ is a feasible solution for the
+even-cycle transversal problem. Thus, letting $x_v=1$ for all $v \in U
+\cup \bar{U}$, and $x_v=0$, otherwise, yields a feasible solution to
+\eqref{lp:p2}. The value of this solution is no more than
+$\max\{c,2\}$ times the
+value of the feasible solution $y+\bar{y}$ for \eqref{lp:d2}. 
+We obtain the following result.
+
+\begin{theorem}
+  Let $G$ be chosen from some minor-closed family of graphs. Then
+  \eqref{lp:p2} has a constant integrality gap. 
+\end{theorem}
+
+\section{Even cycles in planar graphs}
+
+In this section, we provide a constant-factor gap for \eqref{lp:p2} in
+planar graphs in the case of general vertex costs. We will accomplish
+this by refining the argument given in \cite{FJP10} for the case of
+hitting {\em diamonds}.
+
+A diamond is any sub-division of the graph consisting of three
+parallel edges. In \cite{FJP10}, Fiorini et al. consider the problem
+of finding a minimum-cost diamond-transversal in a general graph. The
+authors show that the natural covering LP obtained from \eqref{lp:p2}
+by replacing \C\ by the set \D\ of vertex sets of diamonds in $G$ has
+an integrality gap of $\Omega(\log n)$. The proof is constructive and uses
+a primal-dual algorithm using the natural LP and its dual.
+
+The algorithm in \cite{FJP10} is natural and follows the well-known
+primal-dual strategy: start with a pair $x=y=\0$ of infeasible primal,
+and feasible dual solution. The algorithm iteratively modifies $x$,
+and $y$, maintaining the fact that $x$ is $0,1$, and $y$ is dual
+feasible, and stops as soon as $x$ is primal feasible. After applying
+a customary {\em reverse delete} step, the algorithm arrives at a
+minimally feasible solution $\bar{x} \leq x$, and the authors show
+that its total cost is bounded by $O(\log n)$ times the value of dual
+solution $y$. 
+
+Somewhat more specifically, in every step of the algorithm, where $x$
+is primal infeasible, we let $X$ be the vertex set corresponding to
+$x$. The algorithm then carefully chooses a diamond $D$ in
+$G[V\setminus X]$, and increases its dual variable $y_D$ as much as
+possible, maintaining dual feasibility. At this point, the dual packing
+constraint for a vertex $v \in V\setminus X$ becomes tight, and the
+algorithm sets $x_v=1$. Once $x$ is feasible for the LP, the algorithm
+computes a {\em minimal} feasible solution $\bar{x} \leq x$, and the
+authors show that $y_D > 0$ only if $|D \cap \bar{X}| =  O(\log
+n)$. This suffices to prove that $\bar{X}$ is an $O(\log
+n)$-approximate diamond hitting set. 
+
+In this
+section, we show that their algorithm can be simplified in the case of
+even cycles, and that it can be strengthened using the planarity of
+the underlying graph.
+
+\subsection{Ideas and a first attempt}
+
+A key first observation is captured in the following Lemma which is a
+special case of Kotzig's Theorem on Light Planar Subgraphs (e.g., see
+Section 3 of \cite{JV13}). 
+
+\begin{lemma}
+  A planar multigraph $ G=(V,E)$ where every vertex has at least 3
+  distinct neighbours and no faces of length 2 contains 2 adjacent
+  vertices whose degrees sum to at most 13.
+\end{lemma}
+
+In particular, the above lemma has the following consequence:
+
+\begin{cor}\label{cor:smallec}
+  A 2 connected planar graph G of minimum degree 3 and no faces of
+  length 2 contains an even cycle with at most 11 edges.
+\end{cor}
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+  \begin{center}
+    \includegraphics[width=.3\textwidth]{simple-pd.pdf}
+  \end{center}
+  \caption{\label{fig:simplepd} The figure shows even cycle
+    $C$. White vertices are contracted during compression and have
+    degree 2 in $G[V\setminus X]$, grey vertices have degree at least
+    3 in the same graph.}
+\end{wrapfigure}
+
+Hao's notes have a self-contained proof of the above two statements.
+From here, our algorithm follows the ideas provided in \cite{FJP10},
+simplifying and adapting to even cycles where possible. 
+
+Corollary \ref{cor:smallec} suggests the following natural algorithm:
+start with $X=\emptyset$, and $y=\0$. At any point in the algorithm
+where $X$ is not feasible, compute the {\em 1-compression} $G_1$ of
+$G[V\setminus X]$ as follows: as long as $G$ has a node $v$ of degree 2 with
+exactly two neighbours $u$ and $w$ in $G$, {\em contract} $v$; i.e.,
+replace $uv$ and $vw$ by $uw$, and delete $v$. In the resulting graph
+$G_1$, all nodes have degree at least $3$. Now find a cycle $C_1$ in
+$G_1$ of length at most $11$ whose corresponding cycle $C$ in $G$
+(which we will also call the {\em projection} of $C_1$ in $G$)
+is
+even. Increase $y_C$ as much as possible, and add the newly tight
+vertices to $X$. Repeat the above until $X$ is feasible, then run
+reverse delete, and obtain a minimally feasible set $\bar{X}$. Note
+that the minimality of $\bar{X}$ implies that, for all
+$v \in \bar{X}$, there is an even {\em witness} cycle $C_v$ in $G$
+that that $C_v \cap \bar{X} = \{v\}$. More precisely,  there is such a
+witness cycle $C_v$ that is in the projection of  the compressed
+residual graph {\em at the time} when $v$ was chosen. 
+
+\begin{lemma} \label{lem:simplealg}
+  Suppose that the above algorithm terminates with
+  feasible solution $\bar{X}$. Then the total cost of $\bar{X}$ is at
+  most $11$ times the value of the computed dual solution.
+\end{lemma}
+\begin{proof}
+  Let us consider an even cycle $C$ with $y_C>0$, and let $C_1$ be the
+  short cycle in the 1-compression $G_1$ of the graph $G[V\setminus
+  X]$ at the time where $y_C$ was increased. 
+  In Figure
+  \ref{fig:simplepd}, white nodes have degree $2$ in $G[V\setminus
+  X]$, and grey nodes have degree at least three. Hence the cycle
+  depicted has length $7$ in $G_1$. Suppose that $v \in V(C) \cap
+  \bar{X}$ is a node on $C$ that was chosen by our algorithm for the
+  final transversal.
+
+  Consider two adjacent nodes $u$ and $w$ in $V(C_1)$, and let
+  $P_{uw}$ be the corresponding path in $G$. 
+  Let us first assume that $v$ is an internal (degree $2$) node of
+  $P_{uw}$ for two adjacent nodes $u,w$ of $V(C_1)$. In this case,
+  note that the witness cycle $C_v$ of $v$ contains all nodes of
+  $P_{uw}$ including $u$ and $w$ themselves. Thus, if $\bar{X}$
+  contains $v$ then it contains no other nodes from $P_{uw}$.
+
+  Now suppose that $v \in \bar{X} \cap C_1$ is node of
+  degree at least three on $C$, and let $u$ and $w$ be the neighbours
+  of $v$ on $C_1$. Using the same argument as before, we see that
+  no internal vertex of $P_{uv}$ and $P_{wv}$ can be in $\bar{X}$ in
+  this case. Hence, we must have
+  $|\bar{X} \cap C| \leq 11$, and the solution
+  $\bar{X}$ has cost no more than $11\sum_Cy_C$. 
+\end{proof}
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+  \begin{center}
+    \includegraphics[width=.3\textwidth]{longcyc.pdf}
+  \end{center}
+  \caption{\label{fig:longcyc} A graph in which every even cycle is long.}
+\end{wrapfigure}
+
+Unfortunately, the above algorithm does not always terminate. The
+reason is that we may not be able to find an even cycle whose
+1-compression has at most 11 edges. Consider for example the 
+graph depicted in Figure \ref{fig:longcyc}. This graph has many even
+cycles, albeit no short ones! Notice that the compression of this
+graph has faces of length $2$, and hence Corollary \ref{cor:smallec}
+does not apply. 
+
+\subsection{Dealing with graphs without even cycles of small
+  compressed length}
+
+Consider two even cycles $C_1$ and $C_2$, and
+a set $T$ of vertices that is disjoint from these. 
+Define $a_v^{C_1,C_2,T}=1$
+for all $v \in (C_1 \cap C_2) \cup T$, $a_v^{C_1,C_2,T}=1/2$ for
+$v$ in the symmetric difference $C_1\setminus C_2 \cup C_2 \setminus C_1$
+of $C_1$ and $C_2$, and
+$a_v^{C_1,C_2,T}=0$, otherwise. Note that the following inequality is
+dominated by the two original cover inequalities for
+sets $C_1$ and $C_2$:
+\[ \sum_{v} a^{C_1,C_2,T}_v x_v \geq 1. \]
+Hence, we obtain a new
+pair of LPs that are equivalent to \eqref{lp:p2} and its
+dual. Here, we abuse notation, and let \C\ now be the set of triples $(C_1,C_2,T)$ where
+$C_1$ and $C_2$ are (not necessarily disjoint nor different) 
+even cycles in $G$, and $T$ is a (not necessarily non-empty) set
+of vertices in the complement of $C_1 \cup C_2$. 
+
+\medskip
+
+\hspace*{-.7cm}
+\begin{minipage}{.48\textwidth}
+\begin{align}
+  \min ~~ & c^Tx \tag{$\mbox{P}_{\scriptsize \ect}$} \label{lp:p3} \\
+  \st ~~ & \sum_{v \in (C_1 \cap C_2)\cup T}a^{C_1,C_2,T}_vx_v \geq 1 \quad \forall 
+  (C_1,C_2,T) \in \C \notag \\
+          & x \geq \0. \notag
+\end{align}
+\end{minipage}
+\hspace*{1ex}
+\vline
+\hspace*{1ex}
+\begin{minipage}{.48\textwidth}
+\begin{align}
+  \max ~~ & \1^Ty \tag{$\mbox{D}_{\scriptsize \ect}$} \label{lp:d3} \\
+  \st ~~ & \sum_{(C_1,C_2,T) \in \C} a^{C_1,C_2,T}_vy_{C_1,C_2,T} \leq c_v \quad \forall v
+  \in V
+           \notag \\
+          & y \geq \0. \notag
+\end{align}
+\end{minipage}
+\medskip
+
+Note that the original cover inequalities for even cycles 
+$C$ are contained in the reformulation of \eqref{lp:p2}, by
+letting $C_1=C_2=C$, and $T=\emptyset$. For convenience we will write
+$y_C$ in place of $y_{C,C,\emptyset}$ from here on. 
+
+Our algorithm maintains a pair $(x,y)$ of (partial) primal,
+and dual solutions for the above pair of LPs; for convenience, we let $X$ be the set of vertices
+corresponding to incidence vector $x$. 
+At any time, the algorithm will consider the 1-compression $G_1$
+of the graph $G[V\setminus X]$. The algorithm works as before if $G_1$
+contains a simple, short cycle (i.e., a cycle without parallel edges, and length no more
+than 11) whose
+projection in $G$ is an even-length cycle $C$. In this case we
+increase the dual variable $y_{C}$ as described in the previous
+section as much as possible, adding newly tight vertices to set $X$. 
+
+Note that the same argument also works if there is a pair of vertices $u$ and $v$ that are connected
+by at least three edges $e_1$, $e_2$, and $e_3$ in $G_1$. In this case, two of these edges, say
+$e_1$ and $e_2$, project to an even length cycle $C$ in $G$. We proceed as before.
+
+From here on, we assume that $G_1$ has at most two edges connecting every pair of vertices. 
+We also assume, w.l.o.g., that every edge of $G_1$ is contained in some cycle with even projection,
+and therefore, $G_1$ is 2-connected. Assume now that $G_1$ has cycles with even projection, but none
+that are short and simple. In this case, Corollary \ref{cor:smallec} implies that $G_1$
+cannot be simple. 
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=.85\textwidth]{2compress.pdf}
+  \end{center}
+  \caption{\label{fig:2compress} The figure shows 1 and 2-compression
+    $G_1$ and $G_2$ of the graph shown in Figure \ref{fig:longcyc}. In $\bar{G}_1$ we replace parallel
+    edges in $G_1$ by twin edges. }
+\end{figure}
+
+We obtain graph $\bar{G}_1$ from $G_1$ by replacing each pair of parallel edges
+connecting vertices $u$ and $v$ by a single {\em twin} edge $uv$.
+Note that each face in this new graph has length at least 3.
+Obtain the 2-compression $G_2$ of
+$G$ by contracting degree-2 nodes in $\bar{G}_1$; see Figure
+\ref{fig:2compress}. In the following, abusing notation slightly, we
+call edges created by contracting vertices in $\bar{G}_1$ {\em
+twin} (as their projection in $G_1$ must contain twin edges). Using $G_2$, we will now
+identify a certain even {\em cycle} whose dual variable we increase. 
+We branch into two
+cases. 
+
+\paragraph{$G_2$ is simple.}
+
+We first assume that any pair of vertices is connected by at most 1 edge in $G_2$. 
+In this case, Corollary \ref{cor:smallec} implies that $G_2$ has an even cycle $C_2$ 
+of length at most $11$. Since $G_1$ does not have a short, simple cycle with even
+projection, it follows that $C_2$ must contain at least one twin edge.
+
+We now focus on an edge $uv$ on $C_2$, and let $\bar{P}_1$, $P_1$, and $P$
+be its projections in graphs $\bar{G}_1$, $G_1$, and $G$, respectively.  
+Following the notational conventions of 
+\cite{FJP10}, we say that $P$ is the {\em piece} corresponding to $uv$. 
+Note that the piece of a non-twin edge $uv$ is a $u,v$-path whose
+internal nodes have degree $2$ in $G[V\setminus X]$.
+
+If $uv$ is a twin edge of $C_2$, then the path $\bar{P}_1$ consists of twin, and non-twin
+edges. In turn, a twin edge $u'v'$ on $\bar{P}_1$ projects to a
+subgraph of $G[V \setminus X]$ that is induced by two internally vertex
+disjoint $u',v'$-paths $S_1$ and $S_2$. Furthermore, concatenating these two
+$u',v'$-paths yields an odd cycle. 
+
+In summary, one now sees that
+the {\em block-graph} of the projection of twin edge $uv$ of $C_2$ is 
+a path in $G[V\setminus X]$. Moreover, the
+blocks in this subgraph are odd cycles; see Figure \ref{fig:cycG2} for
+an example.
+
+\begin{figure}[b]
+  \begin{center}
+    \includegraphics[width=.8\textwidth]{cycG2.pdf}
+  \end{center}
+  \caption{\label{fig:cycG2}The first two figures show a  short cycle $C_2$ in $G_2$, and its
+    corresponding projection in $G$. The right figure above shows the piece
+    of twin edge $uv$ of $C_2$. Note the thick edges of cycle $B_2$ above: these edges are
+    part of $T$.}
+\end{figure}
+
+Let us focus on a piece $P$ corresponding to a twin edge $uv$ of
+$C_2$. Vertices $w \in V(P)\setminus  \{u,v\}$ have degree $2$ in
+$G_1$, or they are {\em cut-vertices} of $P$, and have degree $2$ in
+$\bar{G}_1$. In Figure \ref{fig:cycG2} we have coloured such vertices
+in red.
+In the following, we keep track of the 
+{\em slack} in the dual constraint of each vertex $v$ for the current dual feasible
+solution for \eqref{lp:d3}:
+\[ \bar{c}_v := c_v - \sum_{(C_1,C_2,T) \in \C} a^{C_1,C_2,T}_vy_{C_1,C_2,T}.\]
+We now define a {\em canonical} subgraph of each piece $P$. 
+This subgraph will be the support of the inequality of \eqref{lp:p3} whose dual variable
+we want to increase. The subgraph is induced by a set of vertices 
+that we classify as {\em type-1}  
+or {\em type-2}. 
+
+For a non-twin edge
+$uv$ of $C_2$ we let all vertices of the corresponding piece $P$ be of type 1. 
+Now consider a twin-edge $uv$ of $C_2$. All vertices of $P_1$ are added as type-1. 
+Let $u'$ and $v'$ be two neighbouring vertices on $P_1$ that are connected by twin edges 
+$e_1$ and $e_2$ in $\bar{G}_1$ (see Figure \ref{fig:cycG2}). 
+Let $S_1$ and
+$S_2$ be the paths in $G[V\setminus X]$ corresponding to $e_1$ and
+$e_2$, respectively. We let the residual cost $\bar{c}(S)$ of a path $S$ be the
+smallest residual cost of any of its internal nodes. 
+If the maximum among $\bar{c}(S_1)$ and $\bar{c}(S_2)$ is unique, then let the vertices
+of the maximizer be of type 1. Otherwise label $u'$ and $v'$ type-1, and make all internal
+vertices of $S_1$ and $S_2$ type-2. We will call the vertices of $S_1$ and $S_2$ together
+with $u'$ and $v'$ a {\em type-2 cycle} in this case.
+
+Suppose first that the number of type-2 cycles over all pieces of $C_2$ is odd. In this
+case, pick an arbitrary such cycle with paths $S_1$ and $S_2$. Add the internal vertices
+of $S_1$ and $S_2$ to $T$, and {\em erase} their type. For any $v \in V$, we now let
+\[
+  a_v = \begin{cases} 
+    1 & \mbox{if $v$ is type-1, or if } v \in T\\
+    1/2 & \mbox{if $v$ is type-2}\\
+    0 & \mbox{otherwise.}  
+    \end{cases}
+\]
+The inequality
+\begin{equation}\tag{$\circledast$}\label{eq:star} 
+  \sum_v a_v x_v \geq 1 
+\end{equation}
+can be seen to be part of \eqref{lp:p3}.
+The algorithm now increases the dual variable $y_{\circledast}$ corresponding to
+inequality \eqref{eq:star} as much as possible, adding tight vertices to $X$.  
+
+{\em Why the above intricate definition \eqref{eq:star}?} 
+This definition ensures the following crucial property: consider once more the situation
+where the
+algorithm identifies an even cycle $C_2$ in the 2-compression of $G[V\setminus X]$, 
+and let $C_1$ and $C$ be its projections in $G_1$, and $G[V\setminus X]$. 
+Let $e_1$ and $e_2$ be some twin edges in $C_1$ and let $S_1$ and $S_2$ be the vertex sets
+of their projections in $G[V\setminus X]$.
+Recall that we define the residual costs of $S_1$ and $S_2$ as 
+as the smallest residual cost of any vertex in $S_1$ and $S_2$, respectively. 
+Suppose that $\bar{c}(S_1) \geq \bar{c}(S_2)$ {\em before} the increase of $y_
+{\circledast}$. 
+Our definition of $a$ ensures that this inequality remains true even after the increase!
+As a consequence, inductively, this implies that if at some point during the
+remaining execution of the algorithm, a vertex from $S_1$
+is added to $X$, then $X$ must also contain a vertex from $S_2$. 
+
+\paragraph{$G_2$ is not simple.}
+
+In this case, $G_2$ has two vertices $u$ and $v$ that are connected by at least two edges
+$e_1$ and $e_2$. By assumption $\bar{G}_1$ is a simple graph. Thus, at least one of $e_1$
+and $e_2$, say $e_1$, is a twin edge. In this case we let $C_2$ be the cycle formed by
+$e_1$ and $e_2$ and proceed as above.
+
+\subsection{Analysis}
+
+The algorithm terminates at the first time when $X$ is a feasible solution to \ect. We
+then obtain a minimal feasible solution $\bar{X}$ through a reverse-delete step. 
+Let $y$ be the final feasible dual solution computed by the algorithm. 
+Our goal is to prove that the computed solution is $12$-approximate. 
+Following the classic primal-dual argument, it
+suffices to show that
+\begin{equation}\label{eq:pd}
+\sum_{v} a^{C_1,C_2,T}_v \leq 12,
+\end{equation}
+whenever $y_{C_1,C_2,T}>0$. The inequality follows from the argument used in Lemma 
+\ref{lem:simplealg} in the case where $C_1=C_2$ and $T=\emptyset$ (e.g., this is the case when our algorithm found a simple, short, even cycle in $G_1$).
+
+So let us consider the situation during the algorithms where no such short, simple, even
+cycle exists, but where $G[V\setminus X]$ still has even cycles. 
+In this case, as described above, our algorithm computes the 2-compression $G_2$ of $G
+[V\setminus X]$ and finds a short cycle $C_2$ with even projection $C$ in $G[V\setminus
+X]$. In the construction of inequality \eqref{eq:star}, the algorithm selects 
+type-1, and type-2 vertices in $C$, and it also identifies a set $T$ of un-typed vertices
+n $C$. We will show that the sum of the $a$-coefficients of
+the internal vertices of $P$ and any one of $u$ and $v$ is at most $1$. Inequality 
+\eqref{eq:pd} then follows.  
+
+Consider first the case where $uv$ is a non-twin edge of $C_2$, and recall that its
+piece $P$ is a path whose internal vertices have degree $2$. As in the proof of Lemma 
+\ref{lem:simplealg}, at most of the internal vertices of $P$ can be in $\bar{X}$.
+Similarly, if
+one of $P$'s endpoints is in $\bar{X}$ then none of the internal vertices can be in
+$\bar{X}$.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=.5\textwidth]{piece.pdf}
+  \end{center}  
+  \caption{\label{fig:piece} The figure shows the projection $P_1$ of a piece of an
+  edge $uv$ on an even
+  cycle $C_2$ in $G_2$.}
+\end{figure}  
+
+In the remaining part of the proof, we consider a twin edge $uv$ on $C_2$ with projection
+$P_1$ in $G_1$; we refer the reader to Figure \ref{fig:piece} for an example. 
+
+Suppose first that $T$ is empty.
+As in the proof of Lemma \ref{lem:simplealg}, at most one of the internal nodes of $P_1$ 
+(shown in white in Figure \ref{fig:piece}) can be in $\bar{X}$ \comment{one needs to be a
+bit
+careful here, and observe that $G_1$ has no short simple cycles}. Similarly, if one of
+$u$ or $v$
+is part of $\bar{X}$ then none of the internal nodes of $P_1$ can be in $\bar{X}$. 
+
+Focus, on a pair of
+twin edges $e_1$ and $e_2$, connecting vertices $u'$ and $v'$ of $P_1$, and as before,
+let $S_1$ and $S_2$ be the vertex sets of the projections of these edges. 
+Suppose that
+the residual cost of $S_1$ is at least that of
+$S_2$. Then by the invariant, $X$ contains a vertex from $S_1$ only if it also contains a
+vertex of $S_2$. 
+
+So let us assume that $\bar{X}$ contains vertices from $S_1$ and $S_2$. In this case, by
+the
+familiar witness cycle argument, we see that these two vertices are the only
+vertices in $P \cap \bar{X}$. If $S_2$ is in the support of \eqref{eq:star} then it must be
+that
+the projection of $e_1$ and $e_2$ forms a type-2 cycle. Thus, the sum of the
+$a$-coefficients
+of the two $\bar{X}$-vertices in $S_1 \cup S_2$ is $1$ in this case. On the other hand if
+$e_1$
+and $e_2$ do not form a type-2 cycle, then $S_1$ is not in the support of \eqref{eq:star},
+and hence the sum of $a$-coefficients of vertices in $P$ is at most $1$ in that case as
+well. 
+
+Finally, what happens if $T$ is non-empty? In this case, the vertices of $T$ form a cycle
+in some piece $P$, and it may happen that $\bar{X}$ contains two vertices from $T$. In
+this case the $a$-coefficients of these two vertices sum to $2$. Of course, this can
+happen to at most one piece of $C_2$, and hence the total sum of $a$-coefficients around
+$C_2$ is at most $12$. 
+
+\begin{theorem}
+  The above algorithm is $12$-approximate. 
+\end{theorem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\bibliography{main}
+\bibliographystyle{plain}
+\end{document}

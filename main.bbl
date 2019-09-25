@@ -1,0 +1,31 @@
+\begin{thebibliography}{1}
+
+\bibitem{FJP10}
+S.~Fiorini, G.~Joret, and U.~Pietropaoli.
+\newblock Hitting diamonds and growing cacti.
+\newblock In {\em International Conference on Integer Programming and
+  Combinatorial Optimization}, pages 191--204, 2010.
+
+\bibitem{FST11}
+F.~Fomin, S.~Saurabh, and D.~Thilikos.
+\newblock Strengthening {E}rd{\"o}s--{P}{\'o}sa property for minor-closed graph
+  classes.
+\newblock {\em Journal of Graph Theory}, 66(3):235--240, 2011.
+
+\bibitem{JV13}
+S~Jendrol and H-J Voss.
+\newblock Light subgraphs of graphs embedded in the plane—a survey.
+\newblock {\em Discrete Mathematics}, 313(4):406--421, 2013.
+
+\bibitem{Mo94}
+M.~Morgenstern.
+\newblock Existence and explicit constructions of q+ 1 regular ramanujan graphs
+  for every prime power q.
+\newblock {\em Journal of Combinatorial Theory, Series B}, 62(1):44--62, 1994.
+
+\bibitem{BH+19}
+W.~C. van Batenburg, T.~Huyn, G.~Joret, and J.~Raymond.
+\newblock A tight {E}rd{\"o}s--{P}{\'o}sa function for planar minors.
+\newblock pages 1485--1500, 2019.
+
+\end{thebibliography}
