@@ -279,7 +279,7 @@ A key first observation is captured in the following Lemma which is a
 special case of Kotzig's Theorem on Light Planar Subgraphs (e.g., see
 Section 3 of \cite{JV13}). 
 
-\begin{lemma}\label{discharge}
+\begin{lemma}
   A planar multigraph $ G=(V,E)$ where every vertex has at least 3
   distinct neighbours and no faces of length 2 contains 2 adjacent
   vertices whose degrees sum to at most 13.
@@ -661,20 +661,11 @@ We can get an 11 approximation by using a stronger version of corollary \ref{cor
 \begin{corollary}
 A 2 connected planar graph $G$ contains an even cycle $C$ with at most 11 pieces such that no piece of $C$ is twin (in $G_2$) or with at most 10 pieces.
 \end{corollary}
-\begin{proof} 
-If $G_2$ has a parallel edge, one of which is twin, then we get an even cycle with at most 3 pieces.
-By lemma \ref{discharge} we can find adjacent faces $f_1,f_2$ of $G_2$ whose lengths sum to at most 13. If either of these faces contains a twin edge then one of the corresponding cycles in $G$ has even length. This is because a twin edge corresponds to a piece that contains an odd cycle and one can find paths in the piece between its endpoints of either parity. Otherwise, either one of the faces of $G_2$ has even length in $G$ (under the projection), the cycle $C$ formed by the disjoint union of $f_1,f_2$ has length at most 11 and no twin edges.
+\begin{proof}
+By lemma \er
 \end{proof}
 
-One can improve the 11-approximation by noting that getting 11 pieces in our even cycle only happens in a very specific case. In the proof of lemma \ref{discharge} which guarantees an edge $uv$ where the degrees of $u,v$ sum to at most 13 it must be that no edges incident to the chosen vertex were added when we looked for an edge maximal counterexample. Further it must be that at most 1 neighbor of $v$ (deg(v)>deg(u)) which has degree less than 6 has degree 4. %This will place a restriction saying that a certain 3 consecutive
-For the next part let us keep one hit node in the interior of each piece and delete the rest we will prove in the remaining graph that our even cycle contains at most 9 hit nodes. Given an edge $uv$ in $G$ let $p(u,v)$ denote the piece in $G$. \begin{remark}\label{consecutive}
- Let $ tv_iv_{i+1} $ be a triangle face of $G_2$ which has odd in $G$ with no twin edges. Let $ v_{i-1} $ be a neighbor of $v_i$, and $v_{i+2}$ a neighbor of $v_i$. Suppose that $v_i,v_{i+1}$ have no other neighbors. Then  $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) $  contains fewer than 3 hit nodes.
-  % Let  non twin edge distinct from $ v_1 v_3 $ , let $ v_i t_i v_{i+1}$  be the triangle face  using $v_i, v_{i+1} $ if each of $v_i, v_{i+1}$ is incident to exactly 3 faces. 
-\end{remark}
-%%\begin{proof}
-% Suppose that $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) $ contains 3 hit nodes, let $w$ be the  "middle" hit node, then each of $ p(v_{i-1} , v_i ) ,p(v_{i+1},v_{i+2} ) $ contains a hit node besides w. Let $A_w$ be a witness cycle for $w$ and consider the subpath $ Q_w$ of $A_w$ containing $w $ and lying in $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) $  such a path cannot use the pieces $ p(v_{i-1} , v_i ) ,p(v_{i+1},v_{i+2} ) $  and hence both ends of the path are  $t_i$ and so this cycle is $A_w$, but by assumption this cycle is odd in $H$ a contradiction.  \\
- %\includegraphics[scale=0.3]{ConHitnode.jpg}
-%\end{proof}
+
 
 
 
