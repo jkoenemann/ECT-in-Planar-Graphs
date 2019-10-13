@@ -67,6 +67,7 @@
 \newtheorem{theo}[theorem]{Theorem}
 \newtheorem{defin}[theorem]{Definition}
 \newtheorem{nota}[theorem]{Notation}
+\newtheorem{inva}[theorem]{Invariant}
 
 \title{Bounding the Integrality Gap of Transversal LPs}
 %\author{}
@@ -278,12 +279,35 @@ the underlying graph.
 A key first observation is captured in the following Lemma which is a
 special case of Kotzig's Theorem on Light Planar Subgraphs (e.g., see
 Section 3 of \cite{JV13}). 
-
-\begin{lemma}
+Let us call a vertex \emph{heavy} if it has degree 6 or more and \emph{light} otherwise.
+\begin{lemma}\label{discharge}
   A planar multigraph $ G=(V,E)$ where every vertex has at least 3
   distinct neighbours and no faces of length 2 contains 2 adjacent
-  vertices whose degrees sum to at most 13.
+  vertices whose degrees sum to at most 13. Further this bound is tight.
 \end{lemma}
+\begin{proof}
+% starting the proof with edge max counterex
+ Assume $ G=(V,E)$ is an edge maximal counterexample. Define  $d(v)$ as the degree of $v$ in $G$. So G has minimum degree at least three and $d(u)+d(v) > 13$  for every edge $uv$. The choice of $G$ implies that if there are any non-adjacent $u$ and $v$ with $d(u)+d(v)>13$, then $G+uv$ is not planar. Now we assign a \emph{charge} to each vertex: a vertex v gets charge $6-d(v)$. The total charge $\sum_v (6-d(v)) = 6|V| -2|E| $, which is at least 12 using the fact that $|E| \leq 3|V|- 6$ by Euler's formula.
+ 
+ % explain discharging and positive charge
+  Now we \emph{discharge}: a vertex $v$ with a positive charge distributes its charge evenly among its neighbours. To clarify, the charge is sent evenly along all edges incident to $v$. If a neighbour is connected to $v$ by multiple edges, then it gets additional charge for every edge. Since no charge is lost, there must still be vertices with a positive charge. Let $v$ be a vertex with a positive charge. So $v$ has a light neighbour. If $v$ is light, then $v$ and  a light neighbour of $v$ form a pair of vertices whose degrees sum to less than 13. So let us assume $v$ is heavy.
+  
+ %finishing the discharging argument
+ Let $u_1,u_2,..,u_l$ be the neighbours of $v$ in clockwise order. We claim that $u_i,u_{i+1}$ cannot both have degrees less than 6 (where $u_{l+1} =u_1$). For the sake of contradiction assume that this is not true, then $ u_i,v,u_{i+1} $ are contained in a single face $f$, and $u_i,u_{i+1}$ are not neighbours. Let $w$ be the other neighbour of $u_i$ in $f$; thus $w$ is heavy. So adding an edge between $v,w$ inside $f$ would not create adjacent vertices whose degrees summed to less than 13 nor create a face of length 2, which contradicts our choice of $G$.  Thus $v$ does not have 2 consecutive light neighbours and thus has at most as many light neighbours as heavy neighbours.  Let $l, h$ be the number of light and heavy neighbours of $v$. Suppose $v$ has a neighbour $u$ of degree 3. The charge of $v$ is at most  $6-l-h +l =6 -h $. This is because $v$ starts with charge at most $6-l-h$ and receives charge at most 1 from each light neighbour and none from heavy neighbours. So v has at most 5 heavy neighbours and hence at most 10 neighbours. So  $u,v$ form adjacent vertices whose degrees sum to at most 13. If $v$ has no neighbour of degree of exactly 3, then $v$ has charge at most $ 6-l-h +0.5l $. This is because a vertex of degree 4 or more sends a charge of at most 0.5.   So $ 0 < 6-0.5-h \leq 6- 1.5h $, so $v$ has degree at most 7. Let $u$ be a light neighbour of $v$, then $u,v$ is a pair of adjacent vertices whose degrees sum to at most 13. A graph for which the sum of degrees of every edge is at least 13 is given by the stellated icosahedron, the graph obtained from a icosahedron  by adding a vertex  inside each face and edges between that vertex and the boundary of that face; see Figure \ref{StellatedIco}.
+ \end{proof}
+ 
+ \begin{wrapfigure}{r}{0.3\textwidth}
+   \includegraphics[width=0.3\textwidth]{StellatedIcosehedron.pdf}
+   \caption{}\label{StellatedIco}
+ \end{wrapfigure}
+
+\begin{cor}\label{small diamond}
+A 2 connected planar graph G of minimum degree 3 and no faces of length 2 contains a diamond with at most 12 edges.
+\end{cor}
+\begin{proof}
+Consider the dual graph $G^*$.  Since $G$ contains no vertex of degree 2, $G^*$ does not have a face of degree 2. Since $G$ has no face of length 2, $G^*$ has minimum degree 3. Thus $G^*$ contains 2 adjacent vertices whose sum of degrees is at most 13. This in turn  gives us two neighbouring faces whose lengths sum to at most 13 in $G$, which gives us a diamond of size at most 12.
+\end{proof}
+
 
 In particular, the above lemma has the following consequence:
 
@@ -291,6 +315,10 @@ In particular, the above lemma has the following consequence:
   A 2 connected planar graph G of minimum degree 3 and no faces of
   length 2 contains an even cycle with at most 11 edges.
 \end{cor}
+\begin{proof}
+By lemma \ref{discharge}, there are 2 faces $f_1,f_2 \subset E$ of $G$ whose total length is at most 13. If either $f_1,f_2$ is even it is an even cycle with at most 10 edges. Otherwise,  $f_1 \Delta f_2$ is an even cycle with at most 11 edges.
+\end{proof}
+
 
 \begin{wrapfigure}{r}{0.3\textwidth}
   \begin{center}
@@ -376,22 +404,22 @@ does not apply.
 \subsection{Dealing with graphs without even cycles of small
   compressed length}
 
-Consider two even cycles $C_1$ and $C_2$, and
-a set $T$ of vertices that is disjoint from these. 
-Define $a_v^{C_1,C_2,T}=1$
-for all $v \in (C_1 \cap C_2) \cup T$, $a_v^{C_1,C_2,T}=1/2$ for
-$v$ in the symmetric difference $C_1\setminus C_2 \cup C_2 \setminus C_1$
-of $C_1$ and $C_2$, and
-$a_v^{C_1,C_2,T}=0$, otherwise. Note that the following inequality is
+Consider vertex sets $C'_1$ and $C'_2$ that each contain the  vertex set of an even cycle
+in $G$; i.e., for $j \in \{1,2\}$, there is an even cycle $C_j \in \C$ such that $C_j
+\subseteq C'_j$. 
+Define $a_v^{C'_1,C'_2}=1$
+for all $v \in (C'_1 \cap C'_2)$, $a_v^{C',C'}=1/2$ for
+$v$ in the symmetric difference $C'_1\setminus C'_2 \cup C'_2 \setminus C'_1$
+of $C'_1$ and $C'_2$, and
+$a_v^{C'_1,C'_2}=0$, otherwise. Note that the following inequality is
 dominated by the two original cover inequalities for
 sets $C_1$ and $C_2$:
-\[ \sum_{v} a^{C_1,C_2,T}_v x_v \geq 1. \]
+\[ \sum_{v} a^{C'_1,C'_2}_v x_v \geq 1. \]
 Hence, we obtain a new
 pair of LPs that are equivalent to \eqref{lp:p2} and its
-dual. Here, we abuse notation, and let \C\ now be the set of triples $(C_1,C_2,T)$ where
-$C_1$ and $C_2$ are (not necessarily disjoint nor different) 
-even cycles in $G$, and $T$ is a (not necessarily non-empty) set
-of vertices in the complement of $C_1 \cup C_2$. 
+dual. Here, we abuse notation, and let \C\ now be the set of pairs $(C'_1,C'_2)$ where
+$C'_1$ and $C'_2$ are (not necessarily disjoint nor different) 
+supersets of even cycles in $G$.
 
 \medskip
 
@@ -399,8 +427,8 @@ of vertices in the complement of $C_1 \cup C_2$.
 \begin{minipage}{.48\textwidth}
 \begin{align}
   \min ~~ & c^Tx \tag{$\mbox{P}_{\scriptsize \ect}$} \label{lp:p3} \\
-  \st ~~ & \sum_{v \in (C_1 \cap C_2)\cup T}a^{C_1,C_2,T}_vx_v \geq 1 \quad \forall 
-  (C_1,C_2,T) \in \C \notag \\
+  \st ~~ & \sum_{v \in V}a^{C'_1,C'_2}_vx_v \geq 1 \quad \forall 
+  (C'_1,C'_2) \in \C \notag \\
           & x \geq \0. \notag
 \end{align}
 \end{minipage}
@@ -410,7 +438,7 @@ of vertices in the complement of $C_1 \cup C_2$.
 \begin{minipage}{.48\textwidth}
 \begin{align}
   \max ~~ & \1^Ty \tag{$\mbox{D}_{\scriptsize \ect}$} \label{lp:d3} \\
-  \st ~~ & \sum_{(C_1,C_2,T) \in \C} a^{C_1,C_2,T}_vy_{C_1,C_2,T} \leq c_v \quad \forall v
+  \st ~~ & \sum_{(C'_1,C'_2) \in \C} a^{C'_1,C'_2}_vy_{C'_1,C'_2} \leq c_v \quad \forall v
   \in V
            \notag \\
           & y \geq \0. \notag
@@ -420,8 +448,8 @@ of vertices in the complement of $C_1 \cup C_2$.
 
 Note that the original cover inequalities for even cycles 
 $C$ are contained in the reformulation of \eqref{lp:p2}, by
-letting $C_1=C_2=C$, and $T=\emptyset$. For convenience we will write
-$y_C$ in place of $y_{C,C,\emptyset}$ from here on. 
+letting $C'_1=C'_2=C$. For convenience we will write
+$y_C$ in place of $y_{C,C}$ from here on. 
 
 Our algorithm maintains a pair $(x,y)$ of (partial) primal,
 and dual solutions for the above pair of LPs; for convenience, we let $X$ be the set of vertices
@@ -497,8 +525,8 @@ an example.
   \end{center}
   \caption{\label{fig:cycG2}The first two figures show a  short cycle $C_2$ in $G_2$, and its
     corresponding projection in $G$. The right figure above shows the piece
-    of twin edge $uv$ of $C_2$. Note the thick edges of cycle $B_2$ above: these edges are
-    part of $T$.}
+    of twin edge $uv$ of $C_2$. Note the thick edges of cycle $B_2$ above: these
+    are type-3 edges.}
 \end{figure}
 
 Let us focus on a piece $P$ corresponding to a twin edge $uv$ of
@@ -509,18 +537,18 @@ in red.
 In the following, we keep track of the 
 {\em slack} in the dual constraint of each vertex $v$ for the current dual feasible
 solution for \eqref{lp:d3}:
-\[ \bar{c}_v := c_v - \sum_{(C_1,C_2,T) \in \C} a^{C_1,C_2,T}_vy_{C_1,C_2,T}.\]
+\[ \bar{c}_v := c_v - \sum_{(C'_1,C'_2) \in \C} a^{C'_1,C'_2}_vy_{C'_1,C'_2}.\]
 We now define a {\em canonical} subgraph of each piece $P$. 
 This subgraph will be the support of the inequality of \eqref{lp:p3} whose dual variable
 we want to increase. The subgraph is induced by a set of vertices 
 that we classify as {\em type-1}  
-or {\em type-2}. 
+{\em type-2}, or {\em type-3}.
 
 For a non-twin edge
 $uv$ of $C_2$ we let all vertices of the corresponding piece $P$ be of type 1. 
 Now consider a twin-edge $uv$ of $C_2$. All vertices of $P_1$ are added as type-1. 
 Let $u'$ and $v'$ be two neighbouring vertices on $P_1$ that are connected by twin edges 
-$e_1$ and $e_2$ in $\bar{G}_1$ (see Figure \ref{fig:cycG2}). 
+$e_1$ and $e_2$ in $G_1$ (see Figure \ref{fig:cycG2}). 
 Let $S_1$ and
 $S_2$ be the paths in $G[V\setminus X]$ corresponding to $e_1$ and
 $e_2$, respectively. We let the residual cost $\bar{c}(S)$ of a path $S$ be the
@@ -528,41 +556,63 @@ smallest residual cost of any of its internal nodes.
 If the maximum among $\bar{c}(S_1)$ and $\bar{c}(S_2)$ is unique, then let the vertices
 of the maximizer be of type 1. Otherwise label $u'$ and $v'$ type-1, and make all internal
 vertices of $S_1$ and $S_2$ type-2. We will call the vertices of $S_1$ and $S_2$ together
-with $u'$ and $v'$ a {\em type-2 cycle} in this case.
+with $u'$ and $v'$ a {\em type-2 cycle} and call the two $u',v'$ paths handles \cite{FJP10} in this case.
 
-Suppose first that the number of type-2 cycles over all pieces of $C_2$ is odd. In this
-case, pick an arbitrary such cycle with paths $S_1$ and $S_2$. Add the internal vertices
-of $S_1$ and $S_2$ to $T$, and {\em erase} their type. For any $v \in V$, we now let
+Suppose first that the number of type-2 cycles over all pieces of $C_2$ is
+odd. In this case, pick an arbitrary such cycle and label all its internal
+vertices type-3. We call the corresponding cycle a {\em type-3 cycle}. For any
+$v \in V$, we now let
 \[
   a_v = \begin{cases} 
-    1 & \mbox{if $v$ is type-1, or if } v \in T\\
+    1 & \mbox{if $v$ is type-1, or type-3}\\
     1/2 & \mbox{if $v$ is type-2}\\
     0 & \mbox{otherwise.}  
     \end{cases}
 \]
-The inequality
+We claim that the inequality
 \begin{equation}\tag{$\circledast$}\label{eq:star} 
   \sum_v a_v x_v \geq 1 
 \end{equation}
-can be seen to be part of \eqref{lp:p3}.
-The algorithm now increases the dual variable $y_{\circledast}$ corresponding to
-inequality \eqref{eq:star} as much as possible, adding tight vertices to $X$.  
+is part of \eqref{lp:p3}. To see this, let us assume that the number of type-1
+vertices is even (the subsequent argument is easily adapted if this number is
+odd). Let $\bar{C}^1, \ldots, \bar{C}^{2q}$ be the even cardinality set of all
+type-2 cycles over all pieces of $C_2$. Furthermore, for $1 \leq i \leq 2q$,
+let $ \bar{S}^i_1$ and $\bar{S}^i_2$ be the internal vertices of the two paths
+defining $\bar{C}^i$. Since $\bar{C}^i$ is odd by assumption it follows that
+$\bar{S}^i_1$ and $\bar{S}^i_2$ have different parity. By possibly
+renumbering, we may therefore assume that the parity of $\bar{S}^{2i}_1$ is
+different from that of $\bar{S}^{2i+1}_1$, for all $1 \leq i \leq q$. 
 
-{\em Why the above intricate definition \eqref{eq:star}?} 
-This definition ensures the following crucial property: consider once more the situation
-where the
-algorithm identifies an even cycle $C_2$ in the 2-compression of $G[V\setminus X]$, 
-and let $C_1$ and $C$ be its projections in $G_1$, and $G[V\setminus X]$. 
-Let $e_1$ and $e_2$ be some twin edges in $C_1$ and let $S_1$ and $S_2$ be the vertex sets
-of their projections in $G[V\setminus X]$.
-Recall that we define the residual costs of $S_1$ and $S_2$ as 
-as the smallest residual cost of any vertex in $S_1$ and $S_2$, respectively. 
-Suppose that $\bar{c}(S_1) \geq \bar{c}(S_2)$ {\em before} the increase of $y_
-{\circledast}$. 
-Our definition of $a$ ensures that this inequality remains true even after the increase!
-As a consequence, inductively, this implies that if at some point during the
-remaining execution of the algorithm, a vertex from $S_1$
-is added to $X$, then $X$ must also contain a vertex from $S_2$. 
+Assume first that there are no type-3 vertices. In this case, we obtain two
+even cycles, by adding the set of type-1 vertices to  
+\[ Q_j =
+\bigcup_{i=1}^q(\bar{S}^{2i}_j \cup \bar{S}^{2i+1}_j), \]  
+for $j=1,2$. 
+Assume, on the other hand, that there are type-3 vertices, and let $S_1 \cup S_2$ be the
+corresponding partition of the internal vertices of the paths defined above. 
+We now see that adding the set of type-3 vertices to $Q_j$ yields the superset
+of an even cycle, for $j=1,2$. This now completes the argument that \eqref{eq:star} is
+part of \ref{lp:p3}. 
+
+The algorithm increases the dual variable $y_{\circledast}$ corresponding to
+inequality \eqref{eq:star} as much as possible, while maintaining dual feasibility. 
+We then add tight vertices to $X$. Note that our definition of $a$ and inequality 
+\eqref{eq:star} allows us to maintain the following invariant.
+
+\begin{inva}\label{inva}
+  Consider a twin edge $e_1$ and $e_2$ in $C_1$ as defined above, and let $S_1$ and $S_2$
+  be the corresponding vertex sets in $G[V\setminus X]$. If $\bar{c}(S_1) \geq \bar{c}
+  (S_2)$ before the increase of $y_{\circledast}$ then this will be true also after the
+  increase, and until the end of the algorithm's execution. 
+\end{inva}
+
+Let $S_1 \cup S_2$ be the set of internal vertices of a type-2 or type-3 cycle. Note that
+Invariant \ref{inva} implies that if the dual constraint of some $v_1 \in S_1$ becomes
+tight in a step of the algorithm, then there is a vertex $v_2 \in S_2$ whose dual
+constraint becomes tight at the same time. For such a tight cycle, we pick exactly two
+vertices
+$v_1$ and $v_2$ in $S_1$ and $S_2$, respectively, and add them to $X$. We will later refer
+to such an addition as a {\em type-2/3 addition}.
 
 \paragraph{$G_2$ is not simple.}
 
@@ -571,33 +621,44 @@ $e_1$ and $e_2$. By assumption $\bar{G}_1$ is a simple graph. Thus, at least one
 and $e_2$, say $e_1$, is a twin edge. In this case we let $C_2$ be the cycle formed by
 $e_1$ and $e_2$ and proceed as above.
 
-\subsection{Analysis}
+\paragraph{When the algorithm terminates.}
 
 The algorithm terminates at the first time when $X$ is a feasible solution to \ect. We
 then obtain a minimal feasible solution $\bar{X}$ through a reverse-delete step. 
+Suppose that reverse delete considers vertices $v_1$ and $v_2$ that were part of a
+type-2/3 addition in the algorithm. Note that if reverse delete decides to remove one of
+these vertices, then it will remove both. 
+
+\section{Analysis}
+
 Let $y$ be the final feasible dual solution computed by the algorithm. 
 Our goal is to prove that the computed solution is $12$-approximate. 
 Following the classic primal-dual argument, it
 suffices to show that
 \begin{equation}\label{eq:pd}
-\sum_{v \in \bar{X}} a^{C_1,C_2,T}_v \leq 12,
+\sum_{v \in \bar{X}} a^{C'_1,C'_2}_v \leq 12,
 \end{equation}
-whenever $y_{C_1,C_2,T}>0$. The inequality follows from the argument used in Lemma 
-\ref{lem:simplealg} in the case where $C_1=C_2$ and $T=\emptyset$ (e.g., this is the case when our algorithm found a simple, short, even cycle in $G_1$).
+whenever $y_{C'_1,C'_2}>0$. The inequality follows from the argument used in Lemma 
+\ref{lem:simplealg} in the case where $C'_1=C'_2=C$ for some even cycle $C \in \C$
+(e.g., this is the
+case when our algorithm found a simple, short, even cycle in $G_1$).
 
-So let us consider the situation during the algorithms where no such short, simple, even
+So let us consider the situation during the algorithm where no such short, simple, even
 cycle exists, but where $G[V\setminus X]$ still has even cycles. 
 In this case, as described above, our algorithm computes the 2-compression $G_2$ of $G
-[V\setminus X]$ and finds a short cycle $C_2$ with even projection $C$ in $G[V\setminus
-X]$. In the construction of inequality \eqref{eq:star}, the algorithm selects 
-type-1, and type-2 vertices in $C$, and it also identifies a set $T$ of un-typed vertices
-n $C$. We will show that the sum of the $a$-coefficients of
-the internal vertices of $P \cap \bar{X}$ and any one of $u$ and $v$ is at most $1$ if $P$ does not contain $T$ and 2 otherwise. Inequality 
-\eqref{eq:pd} then follows.  
+[V\setminus X]$ and finds a short cycle $C_2$ whose projection $C$ in $G[V\setminus
+X]$ contains an even cycle. In the construction of inequality \eqref{eq:star}, the
+algorithm selects
+type-1, type-2, and type-3 vertices in $C$.
+We will show that the sum of the $a$-coefficients of
+the internal vertices of $P \cap \bar{X}$ and any one of $u$ and $v$ is at most $1$ if $P$
+has no type-3 vertices, and at most 2 otherwise. Inequality 
+\eqref{eq:pd} then follows from the fact that at most one piece of $C_2$ has type-3
+vertices by construction. 
 
 Consider first the case where $uv$ is a non-twin edge of $C_2$, and recall that its
 piece $P$ is a path whose internal vertices have degree $2$. As in the proof of Lemma 
-\ref{lem:simplealg}, at most of the internal vertices of $P$ can be in $\bar{X}$.
+\ref{lem:simplealg}, at most one of the internal vertices of $P$ can be in $\bar{X}$.
 Similarly, if
 one of $P$'s endpoints is in $\bar{X}$ then none of the internal vertices can be in
 $\bar{X}$.
@@ -611,67 +672,242 @@ $\bar{X}$.
   cycle $C_2$ in $G_2$.}
 \end{figure}  
 
-In the remaining part of the proof, we consider a twin edge $uv$ on $C_2$ with projection
-$P_1$ in $G_1$; we refer the reader to Figure \ref{fig:piece} for an example. 
+In the remaining part of the proof, we consider a twin edge $uv$ on $C_2$ with
+projections $P_1$ in $G_1$, and $P$ in $G[V\setminus X]$; we refer the reader
+to Figure \ref{fig:piece} for an example.
 
-Suppose first that $T$ is empty, or not contained in $P$.
-As in the proof of Lemma \ref{lem:simplealg}, the sum of $a^{C_1,C_2,T}_v$ over internal nodes of $P_1 \cap \bar{X}$ 
-(shown in white in Figure \ref{fig:piece})  is at most 1.  \comment{one needs to be a 
-bit
-careful here, and observe that $G_1$ has no short simple cycles}.   % the case of 2 nodes on the interior of a type 2 cycle  or many of the nodes of the "top" handle  is there a terminogy for that here?
-Similarly, if one of
-$u$ or $v$
-is part of $\bar{X}$ then none of the internal nodes of $P_1$ can be in $\bar{X}$. 
+\paragraph{Case 1: $P$ has no type-3 vertices.}
 
-Focus, on a pair of
-twin edges $e_1$ and $e_2$, connecting vertices $u'$ and $v'$ of $P_1$, and as before,
-let $S_1$ and $S_2$ be the vertex sets of the projections of these edges. 
-Suppose that
-the residual cost of $S_1$ is at least that of
-$S_2$. Then by the invariant, $X$ contains a vertex from $S_1$ only if it also contains a
-vertex of $S_2$. 
-If $\bar{X}$ contains an internal node of $S_2$, but not $S_1$, then throughout the algorithm the residual cost of $S_1$ was strictly greater than that of $S_2$ and thus $a^{C_1,C_2,T}_v=0$ for all internal nodes $v$ of $S_1$.
-So let us assume that $\bar{X}$ contains vertices from $S_1$ and $S_2$. In this case, by
-the
-familiar witness cycle argument, we see that these two vertices are the only
-vertices in $P \cap \bar{X}$. If $S_2$ is in the support of \eqref{eq:star} then it must be
-that
+As in the proof of Lemma
+\ref{lem:simplealg}, $\bar{X}$ has at most one of the internal nodes of $P_1$, and if
+there is such a node, then $P$ contains no other node of $\bar{X}$. In this case, 
+the sum of $a^{C'_1,C'_2}_v$ over the nodes of $P \cap \bar{X}$ is at most 1.
+So suppose that $\bar{X}$ has none of the internal vertices of $P_1$. 
+
+Focus, on a pair of twin edges $e_1$ and $e_2$, connecting vertices $u'$ and
+$v'$ of $P_1$, and as before, let $S_1$ and $S_2$ be the vertex sets of the
+projections of these edges.  Suppose that the residual cost of $S_1$ is at
+least that of $S_2$. Then by Invariant \ref{inva}, and by the way we perform
+reverse-delete, $\bar{X}$ contains a vertex from $S_1$
+only if it also contains a vertex of $S_2$. If $S_1 \cup S_2$ forms a type-2/3 cycle, then
+a stronger condition holds: $\bar{X}$ contains either exactly two vertices $v_1 \in S_1$,
+and $v_2 \in S_2$, or $(S_1 \cup S_2)\cap \bar{X}=\emptyset$. 
+%Moreover, the piece $P$
+%contains at most one type-2/3 cycle with  non-empty intersection with $\bar{X}$. 
+
+Let us first assume that $\bar{X}$ contains
+vertices from both $S_1$ and $S_2$. In this case, by the familiar witness cycle
+argument, we see that these two vertices are the only vertices in $P \cap
+\bar{X}$. If $S_2$ is in the support of \eqref{eq:star} then it must be that
 the projection of $e_1$ and $e_2$ forms a type-2 cycle. Thus, the sum of the
-$a$-coefficients
-of the two $\bar{X}$-vertices in $S_1 \cup S_2$ is $1$ in this case. On the other hand if
-$e_1$
-and $e_2$ do not form a type-2 cycle, then $S_1$ is not in the support of \eqref{eq:star},
-and hence the sum of $a$-coefficients of vertices in $P$ is at most $1$ in that case as
-well. 
+$a$-coefficients of the two $\bar{X}$-vertices in $S_1 \cup S_2$ is $1$ in
+this case. On the other hand if $e_1$ and $e_2$ do not form a type-2 cycle,
+then $S_2$ is not in the support of \eqref{eq:star}, and hence the sum of
+$a$-coefficients of vertices in $P$ is at most $1$ in that case as well. 
 
-Finally, what happens if $T$ is non-empty and contained in $P$? Let $S_1,S_2$ be as in the previous case. If $\bar{X}$ contains an interior node of $S_2$ but not of $S_1$, then $a^{C_1,C_2,T}_v$ may be 1, if $T$ is the set of interior nodes of $S_1 \cup S_2$, but we pick at most one such node. 
-The vertices of $T$ form a cycle
-in some piece $P$, and it may happen that $\bar{X}$ contains two vertices from $T$. In
-this case the $a$-coefficients of these two vertices sum to $2$. Of course, this can
-happen to at most one piece of $C_2$, and hence the total sum of $a$-coefficients around
-$C_2$ is at most $12$. 
+Let us now assume that for all cycles $S_1 \cup S_2$ of piece $P$, $\bar{X}$
+contains at most one vertex from $S_1 \cup S_2$. Thus, if $\bar{X} \cap S_2
+\neq \emptyset$ we must have $\bar{X}\cap S_1=\emptyset$ for such a cycle. But
+this implies that we must have had $\bar{c} (S_1)>\bar{c}(S_2)$ at the time of
+increase, and hence $a(S_2)=0$. 
+
+\paragraph{Case 2: $P$ has type-3 vertices.}
+
+Let $S_1,S_2$ be the vertex set of the type-3 cycle. By the same argument as before, 
+$\bar{X}$ contains none or two vertices from $S_1 \cup S_2$. If it contains none, then the
+argument of the previous case applies and the sum of $a$ coefficients of $P$ vertices is
+at most $1$. Otherwise, $P$ contains exactly these two vertices from $\bar{X}$, and the
+$a$ coefficients of $P$ vertices sum to $2$. Since at most one piece of $C_2$ can contain
+type-3 vertices, we now obtain the following theorem. 
 
 \begin{theorem}
   The above algorithm is $12$-approximate. 
 \end{theorem}
 
-We can get an 11 approximation by using a stronger version of corollary \ref{cor:smallec}
+We can get an 11-approximation by using a stronger version of Corollary \ref{cor:smallec}
+that is specifically tunes for our application. In the following, let $G_2$ be the
+2-compression of a given planar graph $G$. As before, we assume that $G_2$ is 2-connected.
 
-
-\begin{corollary}
-A 2 connected planar graph $G$ contains an even cycle $C$ with at most 11 pieces such that no piece of $C$ is twin (in $G_2$) or with at most 10 pieces.
+By an abuse of notation, we will say that a cycle of $G_2$ is even if it contains a twin edge, or its projection in $G$ is even.
+\begin{corollary}\label{cor:smallec improved}
+Suppose that $G_2$ has no faces of length 2. Then either \\ (a) it contains an even cycle without twin edges of length at most $11$, or \\ (b) it contains a cycle $C$ that contains a twin edge of length no more than $10$. 
 \end{corollary}
+\begin{proof} 
+% proof
+If $G_2$ has parallel edges, one of which is twin, then we get an even cycle with at most 3 pieces.
+By Lemma \ref{discharge} we can find adjacent faces $f_1,f_2$ of $G_2$ whose lengths sum
+to at most 13. If one of the faces has a twin edge, then the corresponding cycle satisfies
+condition (b) above. Otherwise, the union of $f_1$ and $f_2$ contains an even cycle
+without twin edges of length at most $11$, and hence (a) holds. 
+\end{proof}
+% intro to 10 apx
+One can improve the 11-approximation by noting that getting 11 pieces in our even cycle only happens in a very specific case. Further, we will modify our algorithm to return a cycle with 8 or fewer pieces if such a cycle exists. 
+For the next part, let us modify which nodes were added to our ECT as follows. We remove any nodes that were not paid for by our blended diamond inequality, and if two internal nodes of a type 2 cycle were selected, we instead choose an end-node of that cycle and declare that that vertex is selected instead. This does not decrease  $\sum_{v \in \bar{X}} a^{C'_1,C'_2}_v $.   Given an edge $uv$ in $G_2$, let $p(u,v)$ denote the piece corresponding to $uv$ in $G$.
+
+%\begin{remark}
+% analysis on how to improve 11apx %
+Consider the discharging argument used in the proof of Lemma \ref{discharge}. We previously showed that in an edge maximal counterexample, there is a vertex $v$ of positive charge and a neighbour $u$ of $v$, such that the degrees of $u$ and $v$ sum to at most 13. That is, suppose $G'$ is obtained from $G$  by adding edges between heavy vertices. Let $uv$ be an edge of $G'$ with degrees of $u,v$ summing to at most 13. If either $u$ or $v$ is incident to an edge of $E(G') \backslash E(G) $, then $u,v$ have degrees summing up to less than 13 in $G$.  One can further see that either $v$ has a neighbour of degree 3 or there is a neighbour $u$ of $v$ such that  the degrees of $u$ and $v$ sum to at most 11. Let $h,l$ be as in the proof of Lemma \ref{discharge}. By analyzing the charge, if 2 or more of the light neighbours of $v$ have degree at least 4, then we get $6-l-h+(l-2)+1 >0$. So $h$ is less than 5.  This is because at  least 2 of the light neighbours of $v$ contribute a charge of at most 1/2. Further, note we proved in Lemma \ref{discharge} the node $v$ has at most 5 heavy neighbours, so the only way for $v$ to have degree 10 is to have heavy and light neighbours of $v$ alternate in the clockwise order. Following the proof of \ref{cor:smallec improved},  if we find 2 adjacent faces $f_1,f_2$ of $G_2$ whose lengths sum to at most 12, then  we can find an even cycle with (i) 9 or fewer pieces, or (ii) with at most 10 pieces, none of which is twin. To sum up our above observations:
+\begin{lemma}\label{improved ec}
+  Suppose that $G_2$ has no faces of length 2. Then one of the following holds: \\
+  (a) The graph $G_2$ contains an even cycle without
+twin edges of length at most $10$. \\
+(b) The graph $G_2$ contains a cycle $C$ that contains a twin edge of length no more than $9$. \\
+(c) The graph $G_2$ contains an even cycle without twin edges of length $11$ that contains exactly 2 faces $f_1,f_2$. Further, $f_1$ has length 10 and $f_2$ length 3. $f_1$ has exactly 5 light neighbours and 5 heavy neighbours in $G^*$ and they alternate in the clockwise order around $f_1$. Further, edges on both $f_1$ and a triangle face have both endpoints degree 3. \\
+(d) The graph $G_2$ contains an even cycle $f$ that contains a twin edge of length at most 10 that is also a face. Further, $f$ has length 10, exactly 5 light neighbours and 5 heavy neighbours in $G^*$ and they alternate in the clockwise order around $f$. Further, edges on both $f$ and a triangle face have both endpoints degree 3.
+
+\end{lemma} 
+%That would give us a 10 approximation. Thus we assume that we do not find 2 adjacent faces of $G_2$ whose degrees sum to less than 13. 
+%\end{remark} 
+% connecting sentence
+We now modify our algorithm to return either an even cycle with 8 pieces or one that is contained in the projection of once of the cases of Lemma \ref{improved ec}.
+\begin{proof} 
+% 10 apx case a) or b)
+We now prove the 10-approximation as follows. If we get case (a) or (b),  the 10-approximation follows in the same manner as the previous 11-approximation.  Suppose we are in case (c), denote the vertices of $f_1$ by  $v_1,v_3,v_4 ,.., v_{11}$, and denote by $v_2$ the node of $f_2$ not on $f_1$.  Let $v_i t v_{i+1}$ be a triangle face sharing an edge with $f_1$ that is not $f_2$. By assumption, this face has odd length in $G$.
+
+\begin{remark}\label{consecutive}
+Let $ t v_i v_{i+1} $ be a triangle face of $G_2$ which has odd length in $G$ with no twin edges. Let $ v_{i-1} $ be a neighbour of $v_i$, and $v_{i+2}$ a neighbour of $v_i$. Suppose that $v_i,v_{i+1}$ have no other neighbours. Then  $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) $  contains fewer than 3 hit nodes; see Figure \ref{ConHit}.
+  % Let  non twin edge distinct from $ v_1 v_3 $ , let $ v_i t_i v_{i+1}$  be the triangle face  using $v_i, v_{i+1} $ if each of $v_i, v_{i+1}$ is incident to exactly 3 faces. 
+\end{remark}
 \begin{proof}
-By lemma \er
+%proof
+ Suppose that $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) $ contains 3 hit nodes, let $w$ be the  ``middle" hit node, then each of $ p(v_{i-1} , v_i ) ,p(v_{i+1},v_{i+2} ) $ contains a hit node besides w. Let $A_w$ be a witness cycle for $w$, and consider the subpath $ Q_w$ of $A_w$ containing $w $ and lying in $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) \cup p(v_{i+1},t) \cup p(v_i,t)  $  such a path cannot use nodes of $ p(v_{i-1} , v_i ) \backslash v_i ,p(v_{i+1},v_{i+2} ) \backslash v_{i+1} $  and hence both ends of the path are  $t$ and so $A_w$ is the projection of $t v_i v_{i+1} $. But by assumption this cycle is odd in $G$, which is a contradiction.  
+\end{proof} 
+
+%using remark to finish proof
+Thus $p(v_{i-1},v_i) \cup p(v_{i},v_{i+1}) \cup p(v_{i},v_{i+1})$ contains at most 2 hit nodes. The remaining 8 pieces have at most 8 hit nodes not counting $v_{i-1},v_{i+2}$, which implies $\sum_{v \in X} a^{C'_1,C'_2}_v x_v \leq 10$.  Case (d) is similar, let $G'$ be the graph obtained from $G$ by deleting the interior nodes of one handle of a type 3 cycle. Let the even cycle be $v_1 v_2 ... v_{10}$. Let $v_i,t,v_{i+1}$ be a triangle face of $G_2$. By remark \ref{consecutive} the pieces  $p(v_{i-1},v_i) \cup p(v_{i},v_{i+1}) \cup p(v_{i},v_{i+1})$ contains at most 2 hit nodes, so the remaining 7 pieces contain 7 hit nodes, not counting $v_{i-1},v_{i+2}$ which again proves $\sum_{v \in X} a^{C'_1,C'_2}_v x_v \leq 10$. 
+ \end{proof}
+ %introducing the 9 apx
+ By being a bit more careful in our book-keeping, we can get a 9-approximation.
+ 
+ \begin{lemma}\label{light+}  \cite{JV13} 
+A planar multigraph $ G=(V,E)$ where every vertex has  at least 3 neighbours embedded with no faces of length 2 contains  an  edge $uv$ such that one of the following is true: \\
+1) $u$ has degree 3 and if $v$ has degree more than 6 it has degree at most $2a_1 + a_2 + 2c +d $ with $ 6-(a_1+a_2) -1.5c -d -b > 0 $. $ a_1 $ is the number of neighbours $w $ of degree 3 for which  the next neighbour of $v$  in the clockwise order is heavy and $a_2$ is the number of other neighbours of degree 3.  %  of $G$ that contain $vw$ are triangles, $a_2$ is the number of neighbours $w$ of $v$ of degree 3 for which not both faces of $G$ that contain $uw$ are triangles 
+$c$ is the number of neighbours of degree 4 or 5. $b$ is the number of faces of length 4 or more containing $v$ and both a light and heavy neighbour of $v$ in $G$. $d$ is the number of heavy neighbours $w$ of $v$ whose such that the next clockwise neighbour of $v$ is also heavy; see Figure \ref{Triangulating}. \\ % $b$ is the number of faces of  
+2) $  \text{deg}(u) + \text{deg}(v) \leq  11 $ % \text{max} (10, 11 -b -c_2 ) $ where $c_2$ is the number of light neighbours of $v$ for which either the next  (in the clockwise order) is light. \\
+
+\end{lemma}
+\begin{proof}
+(of part not in \cite{JV13})
+%proof up to a reasonable length
+ If $G$ contains  2 adjacent light neighbours we are done. Otherwise, let $G'$ be a triangulation of $G$ by drawing edges between heavy vertices. Note that this is possible, since any face of length four or more contains 2 heavy nodes, and we can add that edge.  Just as in \cite{JV13}, by max triangulation $v$ cannot have 2 consecutive light neighbours in $G'$.
+\begin{figure}[h]
+    % \includegraphics[scale=0.28]{PreTriang.png}
+   
+        \begin{subfigure}[t]{0.5\textwidth}
+     \includegraphics[width=0.5\textwidth]{UntriangulatedDual.png}
+         \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
+      \includegraphics[width=0.5\textwidth]{TriangulatedDual.png}
+    \end{subfigure}
+  \caption{Example of a graph $G$ and edges added in obtaining $G'$.} \label{Triangulating}
+  %  \caption{From left to right: Depiction of the $G^*$ with various nodes of $G$,  $G$, and the result of triangulating $G$.}
+   \end{figure}
+ In \cite{JV13} it is proven their exists an edge $uv$, $v$  a vertex with positive charge such that either \\
+ 1) $u$ has degree 3 and $\text{deg}_{G'}(v) \leq 10$, or \\
+ 2) $\text{deg}_{G'}(u)+ \text{deg}_{G'}(v) \leq 11$.
+%Let $f'$ be the number of non heavy neighbours of $v$ in $ G' -G $.
+%logical spot to break up long paragraph
+
+We claim $v$ has degree at least  $2a_1 +2a_2+2c+d +b  $ in $G'$. First let $f_1, f_2,.., f_l$ be the $b$-faces of $G$ that is the faces that $b$ is counting. Let $E'$ be the set of edges of $\delta_{G'} (v)$ contained in the interior of some $f_i$ and let $E''$ be the $d$-edges, that is the edges whose endpoint other than $v$ is counted by $d$.  In any $f_i$ one neighbour $u$ of $v$ is light and the other $u'$ is heavy and thus $uu'$ is not an edge of $G'$ and thus $ \delta_{G'}(v) $ contains an edge in the interior of $f_i$. It thus suffices to prove that $ | \delta_{G'}(v) \backslash E' \backslash E'' | \geq  2a_1 +2a_2+2c$.  We claim that in $ (G' \backslash E' ) \backslash E'' $ there are no consecutive light neighbours of $v$. Assume for a contradiction that there were 2 such neighbours $w,w'$ with $w'$ next neighbour after $w$ in $ (G' \backslash E' ) \backslash E'' $ in the clockwise order about $v$. Suppose that there is a $d$ neighbour $u'$ between $w,w'$ in $G'$ let $u''$ be the last such $d$ neighbour of $ v $ before $w'$ in the clockwise order. Then there is a heavy non $d$ -neighbour $q$ of $v$ in $G$  which lies between $ u'',w' $.  So henceforth we assume that no $d$-neighbours lie between $w, w'$ in the clockwise order about $v$ in $G'$.  
+
+%good spot to break up
+Let $ u' $ be the previous neighbour before $w'$ in $G'$. % Since $u'$ is heavy and $u'$ and the next neighbour in the clockwise order is light, $u' \notin E''$ 
+%I could not figure out how to best explain this simple fact
+Assume $vu \in  E'$ so $u' \in f_j$ for some $f_j$ then $f_j$ must contain one of $vw, vw'$. This is because  $f_j$ contains 2 consecutive neighbours of $v$ in $G$ and contains the edge $vu$ in its interior, and $u$ lies between $w,w'$ in the clockwise order. So the neighbours of $v$ in $f_j$ lie between $w,w'$ in the clockwise order. Since one of them is light, that neighbour must be $w$ or $w'$.  Let  $w''$ be the  one of $w,w'$ contained in $f_j$ and let $u''$ be the other neighbour of $v$ in $G$, then $u''$ lies between $w,w'$ in the clockwise order, which is a contradiction.  %Since both $w,w'$ are neighbours of $v$ in $G$,  $w'', u''$ or $ u'',w'' $ are consecutive.  %  the case that $u''$ is a $d$-neighbour was already addressed. %since $u$ is a  and hence  and light neighbours of $v$ in $f_j$ respectively, then $u''$ lies (as a neighbour) clockwise of $w$ and counterclockwise of $w'$ and further $u''$ lies counterclockwise of $u''$ and hence $f_j$  contains $vw'$ (rather than $vw$ ).  This implies that $v u' \notin E'' $ but $vu'$ lies between (in the clockwise order about v) $w,w'$ which is a contradiction
+Hence there are no 2 consecutive light neighbours.  
+% seemed like a good point to break up the proof
+Since each light edge is preceded and followed by a heavy edge hence $ |\delta_{G'}(v) \backslash E' \backslash E'' | \geq  2a_1 +2a_2+2c$. Calculating charge thus gives us $ 6-(a_1+a_2) -1.5c -d -b > 0 $.
+\begin{figure}[h]
+\begin{subfigure}[t]{0.45\textwidth}
+ \includegraphics[width=0.45\textwidth]{b-face.pdf}    \subcaption{Here $w''=w$. Since $w,u$ are consecutive in $G$, $u''$ must lie before $w'$.} \label{bface}
+\end{subfigure} %\hspace{-0.23\textwidth}
+     \begin{subfigure}[t]{0.45\textwidth}
+      \includegraphics[width=0.45\textwidth]{lastdnode.pdf}    \caption{If there is a heavy node between $w,w'$ then there is a non-$d$ neighbour heavy node.}  \label{lastd}
+     \end{subfigure}  %\hspace{-0.23\textwidth}
+     \begin{subfigure}[t]{0.6\textwidth}
+       \includegraphics[width=0.6\textwidth]{ConHitnode.pdf}
+       \caption{Since $t v_i v_{i+1}$ is odd and $v_i, v_{i+1}$ have exactly 3 neighbours, the hit node on $v_iv_{i+1}$ cannot have a witness cycle. }\label{ConHit}
+     \end{subfigure} \hspace{-0.7\textwidth}
+     \caption{} \label{}
+\end{figure}
+%Now suppose that  $\text{deg}_{G'}(u)+ \text{deg}_{G'}(v) \leq 11$. Now each $c_2$ neighbour must be followed in the clockwise order  by a heavy neighbour in $G'$ and each $b$-face $f_j$ contains an edge of $E(G') \backslash E(G)$ in it's interior. Thus  $  \text{deg}(u) + \text{deg}(v) \leq 11 -b -c_2 $.
+\end{proof}
+%\p definition paragraph
+When $v$ and $G$ are specified we will refer to $a_1,a_2,b,d,c$ neighbours as those neighbours counted by $a_1,a_2,b,d,c$v respectively and a $a_1,a_2,b,d,c$  edge as an edge between $v$ and a $a_1,a_2,b,d,c$ neighbour respectively.
+%
+\begin{remark}\label{light+r}
+In case 1) of lemma \ref{light+} we have that $v$ has degree at most $ 10 - a_2 -2 \lfloor 0.5c \rfloor -d -2b$
+\end{remark}
+\begin{proof}  Using same variables as \ref{light+}, $ 6 > (a_1+a_2) +1.5c +d +b $ so $ 5 \geq \lfloor (a_1+a_2) +1.5c +d +b \rfloor $ so  $ 5-(a_1+a_2) - \lfloor 1.5c \rfloor -d -b \geq 0$ which implies $  10 \geq 2(a_1+a_2) +2c +2 \lfloor 0.5c \rfloor +2d +2b \geq \text{deg}(v)  +a_2 +2 \lfloor 0.5c \rfloor +d +2b  $.
+\end{proof}
+%
+\begin{lemma}\label{even reduced+}
+We can find an  cycle $C$ of $G_2$ even in $G$ such that either: \\
+1)  $C$ is the union of 2 faces $f_1,f_2$ of $G_2$ with, $f_1$ length 3 and at most  $ \text{max} ( 9, 11- a_2 -2 \lfloor 0.5 c \rfloor -d  -b $) pieces.   Where $ a_2, c ,d ,b $ are as in lemma \ref{light+}  for $G_2^*$ with $v=f_1$  and $C$ is disjoint from the interior of any double piece. \\ 
+2) $C$ has at most 9 pieces and is disjoint from the interior of any double piece. \\
+3) $C$ has at most $10- a_2 -2 \lfloor 0.5 c \rfloor -d  -b $  pieces. One piece may be double. \\
+4) $C$ has at most 7 pieces. \\
+Where for 1),2) $a_1,a_2, c, d, b ,c_2$ are as in lemma \ref{light+} with  $ v=v_2$  $u=f_1$ in the dual of $G_2$.
+\end{lemma}
+\begin{proof}
+%\p proof
+ Apply lemma \ref{light+} to $G_2^*$.  In case 1) of \ref{light+}  we find a node $u$ of degree 3 adjacent to a node $v$ of degree at most $10-a_2-2* \lfloor 0.5 c \rfloor -d -b$  in $H^*$. ( $a_2,c,d,b$ as in \ref{light+}) . Let $f_1 , f_2$ be the faces corresponding to $v,u$ in G if $f_1$ or $f_2$ is even such an even cycle works otherwise $f_1 \cup f_2$ is an even cycle in G with at most  $  11- a_2 -2 \lfloor 0.5 c \rfloor -d  -b $ pieces. Case 2) is similar.
 \end{proof}
 
+\begin{proof} 
+% \p breaking proof intocases and case 1)
+Let us consider each case of \ref{even reduced+}. 
 
+Case 1). If $C$ has fewer than 9 pieces we are done. Otherwise let $v_1, v_2, .., v_l$ be the cycle $C$ in $G_2$ with $v_1, v_2, v_3$ vertices belonging to a triangle face of  $G_2$  we denote: \begin{equation}
+    p'(v_i,v_j) = \begin{cases} 
+    \cup_{u=i}^{j-1} p(v_u,v_{u+1}  ) \ \ \ \text{if} \ \  i <j \\
+    \cup_{u=j}^{l} p(v_u,v_{u+1} ) \cup \cup_{u=1}^{i-1} p(v_u.v_{u+1}  ) \ \ \text{otherwise}
+    \end{cases}
+\end{equation} 
+$ v_{l+i} = v_i $ in above equation. \\
 
+%\p case 1a
+Case 1a). $v_1, v_2$ are both incident to 3 faces of $G_2$. We claim that there are at most 3 hit nodes in $p(v_l,v_1) \cup p(v_1, v_2) \cup p(v_2,v_3) \cup p(v_3,v_4)$.
+Assume not then each of $p(v_l,v_1) , p(v_1, v_2) , p(v_2,v_3) , p(v_3,v_4)$ contains a hit node, and one of $p(v_2,v_4) \backslash \{v_2 \} , p(v_l,v_2) \backslash \{v_2 \}$  contains 2 hit nodes. By symmetry assume $p(v_2,v_4) \backslash \{v_2 \}$ contains 2 hit nodes. Let $u$ be the node on $p(v_2,v_4) \backslash \{ v_2 \} $  closest to $ v_2$. Now consider the witness cycle $C_u$ of $u$ and consider a subpath $P$ of $ C_u$ lying in $  C $ and let $P'$ be the portion of $P$ starting at $u$ not headed towards $v_2$ $P'$ cannot go to $v_4$ since $p(v_2,v_4) \backslash \{v_2 \}$  contains 2 hit nodes $ p(v_3,v_4) \backslash v_3 $ contains a hit node. So after reaching $v_3$ $P'$ must head towards $ v_1 $ since $p(v_l,v_1) , p(v_1, v_2)$ each contain a hit node $P'$ hits another hit node besides $u$ which is a contradiction.
+Let $ f_1,f_2 , a_1, a_2, b,c , d $ be as in lemma \ref{even reduced+}. So we have that $ l \leq 11- a_2 -  2 \lfloor 0.5 c \rfloor -d -2b $  if $l \leq 10 $ then % since each piece is single there are at most 5 nodes on $ ( \cup_{i=5}^l p(v_{i-1},v_i )  ) \backslash v_5,v_l $, and 
+since there are at most 3 nodes on $p(v_l,v_1) \cup p(v_1, v_2) \cup p(v_2,v_3) \cup p(v_3,v_4)$  there are at most 9 nodes on $C$. So $a_2 +  2 \lfloor 0.5 c \rfloor +d +2b \leq 1 $
 
+From $l \leq 2a_1+a_2+2c+d$  we get $a_1 \geq 4$ with 3 of the $a_1$ edges not being $v_1v_3$.  Let $ v_r v_{r+1}, v_w v_{w+1} $ be the next and previous $a_1$ edges from $ v_1, v_2 $ on $C$ in the clockwise order and let $ v_k v_{k+1}$ be the remaining $a_1$ edge so $ \{ v_{k-1}v_{k}, v_{k} v_{k+1}, v_{k+1} w_{k+2} \} \cap\{ v_lv_1, v_1v_2,v_2v_3, v_3v_4 \} = \emptyset$ by remark \ref{consecutive} we get 
+$ p'( v_{k-1}, v_{k+2} ) \cup p'( v_l , v_ 4 ) $ contains at most 5 hit nodes.
+ Since $C \backslash p'( v_{w-1}, v_{w+2} ) \cup p'( v_l , v_ 4 ) $ is contained in 4 pieces we get that $C$ contains at most 9 hit nodes. See Figure \ref{case1}.
+ 
+%\p case 1b)
+ Case 1b). Now suppose that one of $v_1, v_3$ is incident to more than 3 faces of $G_2$. Recall  $ l \leq 11- a_2 -2 \lfloor 0.5 c \rfloor -d  -b , 2a_1+a_2+2c+d +1  $.  If $l \leq 9$ we are done otherwise so $c \leq 1, \ \ a_2+b+d \leq 1$  $ a_1 \geq 3 $
+ %so either i) $a_1 \geq 4$ % or ii) $a_1=3, \ \  a_2+d \geq 1 $ 
+%In case i) 
+Thus we can find an $a_1$ edge $ v_r v_{r+1}$  distinct from $v_1 v_3$ that is not proceeded or followed by a $c$ edge. Since  one of $v_1, v_3$ is incident to more than 3 faces of $G_2$ either one of $ v_l v_1 , v_3 v_4$ is an $a_2$ or $ c $ edge or one of $ v_1, v_3$ is a b face in $G_2^*$ which implies that neither $v_r   $ or $v_{r+1}$ can be a b-face  in $G_2^*$ . nor can $v_{r-1} v_r$ be an $a_2$ edge. Combined with $ v_r v_{r+1}$ is an $a_1$ edge we get that $v_r,v_{r+1}$ both have exactly 3 neighbours and by remark \ref{consecutive}  $p(v_{r-1}, v_{r+2} )$ contains at most 2 hit nodes and hence $C$ has at most 9 hit nodes. 
 
+%case 2
+Case 2).  A 9-approximation is immediate. 
 
+% case 3
+Case 3). Let $C_1$ be the result of taking only the bottom handle of each (and cut nodes and end nodes) piece of $C$. Since every hit node $v'$ on a top handle except the one on the special cycle (if it exists) is either not paid for, or appears as a pair $v',w'$ where $w'$ is on the bottom handle and the coefficients of $ v',w' $ in our blended diamond inequality are both 1/2, it suffices to prove that $C_1$ contains at most 8 hit nodes. Denote $m(u,v) =p(u,v) \cap C_1$ $m'(u,v)=p'(u,v) \cap C_1$.   Where the edges of $C$ in $G_2$ are $v_1,v_2,..,v_l$ note that if $v_i,v_{i+1} , t_i$ is a triangle in $ G_2$ then $ v_i v_{i+1}$ is a single piece in G and remark \ref{consecutive} holds for $m'(v_{i-1},v_{i+2})$. From $l \leq 2a_1 + a_2 + 2c +d $
+One can check that either  $a_1 \geq 4 $   $ c \leq 1, \ \ \ b=d=0 $ or $ l \leq 9 $,   $a_2+ 2 \lfloor 0.5c \rfloor +d +b  \leq 1 $.
+\begin{figure}[h]
+\begin{subfigure}[t]{0.5\textwidth}
+\includegraphics[width=0.5\textwidth]{evenCase1.pdf}
+\caption{Case 1a.)}\label{case1}
+\end{subfigure}
+\begin{subfigure}[t]{0.5\textwidth}
+\includegraphics[width=0.5\textwidth]{Case3a).pdf}  
+\caption{Case 3a).}\label{case 3a)}
+\end{subfigure}
+\caption{Red and grey portion represent our even cycle.  Consecutive red pieces contain at least one fewer hit node than number of cycles.}
+\end{figure}
+%\p case 3a)
+Case 3a). $b = \lfloor 0.5c \rfloor = d = a_2 =0$. Then there are at least 4 $ a_1  $ edges and since $b=0$ each endpoint of an $a_1$ edge $v_i v_{i+1}$ has exactly 3 neighbours. Thus we can find 2 $a_1$ edges $ v_i v_{i+1} , v_j v_{j+1}$ with $i \neq j-2,j+2$.  ($v_{j+l}=v_j$)  Hence $m'(v_{i-1},v_{i+2} )$  , $m'(v_{i-1},v_{i+2} )$ each contain at most 2 hit nodes and hence $C_1$ contains at most 8 hit nodes. 
 
+%\ case 3b
+Case 3b).   $ b+d + a_2 + 2\lfloor 0.5c \rfloor \ =1 $ $C_1$ has 9 pieces. Here we wish to show there is an $a_1$ edge with both endpoints having exactly 3 neighbours. If $b=1$, $a_2=d=0$ and from $l \leq 2a_1 + a_2 + c +d $  we get  there are at least 3 $a_1$ edges and the endpoints and thus for at least 1 $a_1$ edge $v_iv_{i+1}$ $v_i, v_{i+1}$  both (since they are not $b$ nodes ) have 3 neighbours.   If $d=1$ then $a_1 \geq 2$ and the endpoints of any $a_1$ edge have exactly 3 neighbours, since they are not $b$ nodes.  
 
+%case 4
+Case 4). Our even cycle $C$ has fewer than 7 pieces, then our inequality will count at most 8 hit nodes.
+\end{proof}
 
 
 
