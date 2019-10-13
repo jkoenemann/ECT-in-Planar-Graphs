@@ -293,16 +293,22 @@ Let us call a vertex \emph{heavy} if it has degree 6 or more and \emph{light} ot
  % explain discharging and positive charge
   Now we \emph{discharge}: a vertex $v$ with a positive charge distributes its charge evenly among its neighbours. To clarify, the charge is sent evenly along all edges incident to $v$. If a neighbour is connected to $v$ by multiple edges, then it gets additional charge for every edge. Since no charge is lost, there must still be vertices with a positive charge. Let $v$ be a vertex with a positive charge. So $v$ has a light neighbour. If $v$ is light, then $v$ and  a light neighbour of $v$ form a pair of vertices whose degrees sum to less than 11. So let us assume $v$ is heavy.
   
+ \begin{figure}
+  \begin{center}
+   \includegraphics[width=0.39\textwidth]{StellatedIcosehedron.pdf}
+   \end{center}
+   \caption{\label{StellatedIco} The figure shows a {\em stellated} icosahedron for which the bound given in
+   Lemma \ref{discharge} is tight.}
+ \end{figure}
+
  %finishing the discharging argument
  Let $u_1,u_2,..,u_l$ be the neighbours of $v$ in clockwise order. We claim that $u_i,u_{i+1}$ cannot both have degrees less than 6 (where $u_{l+1} =u_1$). For the sake of contradiction assume that this is not true, then $ u_i,v,u_{i+1} $ are contained in a single face $f$, and $u_i,u_{i+1}$ are not neighbours. Let $w$ be the other neighbour of $u_i$ in $f$; thus $w$ is heavy. So adding an edge between $v,w$ inside $f$ would not create adjacent vertices whose degrees summed to less than 11 nor create a face of length 2, which contradicts our choice of $G$.  Thus $v$ does not have 2 consecutive light neighbours and thus has at most as many light neighbours as heavy neighbours.  Let $l, h$ be the number of light and heavy neighbours of $v$. Suppose $v$ has a neighbour $u$ of degree 3. The charge of $v$ is at most  $6-l-h +l =6 -h $. This is because $v$ starts with charge at most $6-l-h$ and receives charge at most 1 from each light neighbour and none from heavy neighbours. So v has at most 5 heavy neighbours and hence at most 10 neighbours, and $v$ is adjacent to $u$ which has degree 3. 
+ 
  %So  $u$ and $v$ form adjacent vertices whose degrees sum to at most 13. 
  Now suppose $v$ has no neighbour of degree of exactly 3, and some neighbour $u$ of degree 4. Then $v$ has charge at most $ 6-l-h +0.5l $. This is because a vertex of degree 4 or more sends a charge of at most 0.5.   So $ 0 < 6-0.5-h \leq 6- 1.5h $, so $v$ has degree at most 7. So $v,u$ are a pair of adjacent vertices whose degrees sum to at most 11. If neither of the previous assumptions hold, then all the light neighbours of $v$ have degree 5. Then $v$ has charge at most $ 6-l-h +0.2l \leq 6-1.8h $. Because the charge is positive, $h$ is at most 3. Let $u$ be any light neighbour of $v$, then $u$ and $v$ are a pair of adjacent vertices whose degrees sum to at most 11. A graph for which the sum of degrees of every edge is at least 13 is given by the stellated icosahedron, the graph obtained from a icosahedron  by adding a vertex  inside each face and edges between that vertex and the boundary of that face; see Figure \ref{StellatedIco}.
  \end{proof}
  
- \begin{wrapfigure}{r}{0.3\textwidth}
-   \includegraphics[width=0.3\textwidth]{StellatedIcosehedron.pdf}
-   \caption{}\label{StellatedIco}
- \end{wrapfigure}
+
 Denote the dual of a graph $G$ embedded in the plane by $G^*$.   % is this clear dual not need to be defined?
 \begin{cor}\label{small diamond}
 A 2 connected planar graph G of minimum degree 3 and no face of length 2 contains a diamond with at most 12 edges.
@@ -323,15 +329,15 @@ By lemma \ref{discharge}, there are 2 faces $f_1,f_2 \subset E$ of $G$ whose tot
 \end{proof}
 
 
-\begin{wrapfigure}{r}{0.3\textwidth}
+\begin{figure}
   \begin{center}
-    \includegraphics[width=.3\textwidth]{simple-pd.pdf}
+    \includegraphics[width=.9\textwidth]{simple-pd.pdf}
   \end{center}
-  \caption{\label{fig:simplepd} The figure shows even cycle
+  \caption{\label{fig:simplepd} Figure (i) shows even cycle
     $C$. White vertices are contracted during compression and have
     degree 2 in $G[V\setminus X]$, grey vertices have degree at least
-    3 in the same graph.}
-\end{wrapfigure}
+    3 in the same graph. Figure (ii) shows graph in which every even cycle is long. }
+\end{figure}
 
 Hao's notes have a self-contained proof of the above two statements.
 From here, our algorithm follows the ideas provided in \cite{FJP10},
@@ -366,7 +372,7 @@ residual graph {\em at the time} when $v$ was chosen.
   short cycle in the 1-compression $G_1$ of the graph $G[V\setminus
   X]$ at the time where $y_C$ was increased. 
   In Figure
-  \ref{fig:simplepd}, white nodes have degree $2$ in $G[V\setminus
+  \ref{fig:simplepd}.(i), white nodes have degree $2$ in $G[V\setminus
   X]$, and grey nodes have degree at least three. Hence the cycle
   depicted has length $7$ in $G_1$. Suppose that $v \in V(C) \cap
   \bar{X}$ is a node on $C$ that was chosen by our algorithm for the
@@ -389,17 +395,10 @@ residual graph {\em at the time} when $v$ was chosen.
   $\bar{X}$ has cost no more than $11\sum_Cy_C$. 
 \end{proof}
 
-\begin{wrapfigure}{r}{0.3\textwidth}
-  \begin{center}
-    \includegraphics[width=.3\textwidth]{longcyc.pdf}
-  \end{center}
-  \caption{\label{fig:longcyc} A graph in which every even cycle is long.}
-\end{wrapfigure}
-
 Unfortunately, the above algorithm does not always terminate. The
 reason is that we may not be able to find an even cycle whose
 1-compression has at most 11 edges. Consider for example the 
-graph depicted in Figure \ref{fig:longcyc}. This graph has many even
+graph depicted in Figure \ref{fig:simplepd}.(ii). This graph has many even
 cycles, albeit no short ones! Notice that the compression of this
 graph has faces of length $2$, and hence Corollary \ref{cor:smallec}
 does not apply. 
@@ -480,7 +479,7 @@ cannot be simple.
     \includegraphics[width=.85\textwidth]{2compress.pdf}
   \end{center}
   \caption{\label{fig:2compress} The figure shows 1 and 2-compression
-    $G_1$ and $G_2$ of the graph shown in Figure \ref{fig:longcyc}. In $\bar{G}_1$ we replace parallel
+    $G_1$ and $G_2$ of the graph shown in Figure \ref{fig:simplepd}.(ii). In $\bar{G}_1$ we replace parallel
     edges in $G_1$ by twin edges. }
 \end{figure}
 
@@ -794,19 +793,23 @@ $c$ is the number of neighbours of degree 4 or 5. $b$ is the number of faces of 
 %(of part not in \cite{JV13})
 %proof up to a reasonable length
  If $G$ contains  2 adjacent light neighbours we are done. Otherwise, let $G'$ be a triangulation of $G$ by drawing edges between heavy vertices. Note that this is possible, since any face of length four or more contains 2 heavy nodes, and we can add that edge.  Just as in \cite{JV13}, by max triangulation $v$ cannot have 2 consecutive light neighbours in $G'$.
-\begin{figure}[h]
+
+\begin{figure}
     % \includegraphics[scale=0.28]{PreTriang.png}
    \begin{center}
-          \begin{subfigure}[t]{0.5\textwidth}
-     \includegraphics[width=0.5\textwidth]{UntriangulatedDual.png}
-         \end{subfigure} \hspace{-0.2\textwidth}
-    \begin{subfigure}[t]{0.5\textwidth}
-      \includegraphics[width=0.5\textwidth]{TriangulatedDual.png}
+    \hspace*{.2\textwidth}
+      \begin{subfigure}[t]{.48\textwidth}
+        \includegraphics[width=0.48\textwidth]{UntriangulatedDual.png}
+         \end{subfigure} 
+    \hspace*{-.18\textwidth}
+      \begin{subfigure}[t]{0.48\textwidth}
+      \includegraphics[width=0.48\textwidth]{TriangulatedDual.png}
     \end{subfigure}
-            \end{center}
-  \caption{Example of a graph $G$ and edges added in obtaining $G'$.} \label{Triangulating}
+    \end{center}
+  \caption{\label{Triangulating} Example of a graph $G$ and edges added in obtaining $G'$.} 
   %  \caption{From left to right: Depiction of the $G^*$ with various nodes of $G$,  $G$, and the result of triangulating $G$.}
-   \end{figure}
+\end{figure}
+
  In the proof of Lemma \ref{discharge} it was shown there exists an edge $uv$, $v$  a vertex with positive charge such that either \\
  1) $u$ has degree 3 and $\text{deg}_{G'}(v) \leq 10$, or \\
  2) $\text{deg}_{G'}(u)+ \text{deg}_{G'}(v) \leq 11$.
