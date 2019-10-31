@@ -310,21 +310,29 @@ Let us call a vertex \emph{heavy} if it has degree 6 or more and \emph{light} ot
  For the next case, suppose $v$ has no neighbour of degree of exactly 3, and some neighbour $u$ of degree 4.  A vertex of degree 4 or more sends a charge of at most 0.5. Therefore $v$ has charge at most $ 6-l-h +0.5l $.   So the charge of $v$, which is positive, is at most $ 6-0.5l-h $, which is at most  $6- 0.75(h+l) $. Hence $v$ has degree at most 7. Consequently, $v,u$ are a pair of adjacent vertices whose degrees sum to at most 11. 
  
  If neither of the previous assumptions hold, then all the light neighbours of $v$ have degree 5. Then $v$ has charge at most $ 6-l-h +0.2l $ which is at most $6-0.9(h+l) $. Because the charge is positive, $v$ has degree at most 6. Let $u$ be any light neighbour of $v$, then $u$ and $v$ are a pair of adjacent vertices whose degrees sum to at most 11.
- 
- A graph for which the sum of degrees of every edge is at least 13 is given by the stellated icosahedron, which is obtained from an icosahedron  by adding a vertex  inside each face and edges between that vertex and the boundary of that face; see Figure \ref{StellatedIco}.
  \end{proof}
-Note that in the above proof, we can find a pair of vertices whose sum of degrees is strictly less than 13 except under certain conditions.  Suppose we cannot find such a pair of vertices, let $u$ and $v$ be a pair of vertices with degrees summing up to 13 and $v$ having degree 10.  Suppose that a face $f$ of $G$ with length 4 contains $v$ and a light neighbour $u'$ of $v$.  By assumption, $f$ does not contain 2 adjacent light neighbours. In $G'$, the face $f'$ lying in the region bounded by $f$ has no adjacent light neighbours and if $f'$ had length 4 or more, it would contain a heavy node other than $v$. Thus $f'$ has length 3 by edge maximality of $G'$. Since $u'$ is light, $G' \backslash G $ contains no edge incident to $u'$, so the two neighbours of $v$ in $f'$ are not the same neighbours as in $f$. Thus  $v$ is incident to an edge of $G' \backslash G$, so $u$ and $v$ have degrees summing up to at most 12 in $G$. 
-From the proof of Lemma \ref{discharge} it is clear the only way for $v$ to have degree 10 is to have exactly 5 light and 5 heavy neighbours, further they must alternate in the clockwise order about $v$ and at least 4 of the neighbours of $v$ must have degree 3.
 
-Thus the only case when we cannot find 2 vertices whose degrees sum up to at most 13 is when there is a vertex $v$ with 5 light and 5 heavy neighbours and they alternate in the clockwise order around $v$. Further, at least 4 of the light neighbours of $v$ have degree 3 and all faces containing  $v$ and a light neighbour of $v$ have length 3. Let us call such a vertex $v$ \emph{particular}.
 
-Denote the dual of a graph $G$ embedded in the plane by $G^*$.   % is this clear dual not need to be defined?
-%\begin{cor}\label{small diamond}
-%A 2 connected planar graph G of minimum degree 3 and no face of length 2 contains a diamond with at most 12 edges.
-%\end{cor}
-%\begin{proof}
- %Since $G$ contains no vertex of degree 2, $G^*$ does not have a face of degree 2. Since $G$ has no face of length 2, $G^*$ has minimum degree 3. Thus $G^*$ contains 2 adjacent vertices whose sum of degrees is at most 13. This in turn  gives us two neighbouring faces whose lengths sum to at most 13 in $G$, which gives us a diamond of size at most 12.
-% \end{proof}
+Lemma \ref{discharge} is indeed tight, and there are example graphs satisfying the stated conditions for which
+no pair of adjacent vertices has degree sum less than 13. One such example is the {\em stellated icosahedron}
+shown in Figure \ref{StellatedIco}. The above proof of Lemma \ref{discharge} provides a quite precise
+characterization of tight instances $G$ satisfying the Lemma's conditions. Let $u, v$ be two adjacent vertices
+whose degree sum to $13$ in such a graph $G$, and suppose, w.l.o.g., that $v$ has degree no smaller than that
+of $u$. Then the above proof shows that $v$ has degree $10$ and $u$ has degree $3$. Moreover, light and heavy
+neighbours of $v$ alternate, and at least $4$ of the light neighbours of $v$ must have degree exactly $3$. 
+
+There is even more structure! Tightness of Lemma \ref{discharge} also implies that $G$ must be an edge-maximal
+counter-example. Consider a face $f$ incident to $v$ containing a light neighbour $v'$ of $v$. 
+Let $u'$ be the other neighbour of $v$ on the same face. Since light and heavy neighbours of $v$
+alternate, $u'$ must be a heavy neighbour. We argue that $f$ must be a face of length $3$. If not, then $v'$
+has a neighbour $w$ on $f$ different from $v$ and $u'$. This node $u'$ must be heavy, and hence we would be
+able to add edge $vw$ to $G$ without violating planarity. A contradiction to $G$'s maximality. This shows that
+all faces incident to $v$ have length $3$. 
+In the following, we call a vertex $v$ {\em particular} if it has degree $10$, its neighbours are alternating
+light and heavy, and all its incident faces have length $3$. 
+  
+
+Denote the dual of a graph $G$ embedded in the plane by $G^*$.   
 
 In particular, the above lemma has the following consequence:
 
