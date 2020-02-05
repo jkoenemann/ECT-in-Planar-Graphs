@@ -302,12 +302,12 @@ Let us call a vertex \emph{heavy} if it has degree 6 or more and \emph{light} ot
  \end{figure}
 
  %finishing the discharging argument
- Let $u_1,u_2,..,u_l$ be the neighbours of $v$ in clockwise order and let $u_{l+1}=u_1$. We claim that $u_i,u_{i+1}$ cannot both have degrees less than 6. For the sake of contradiction assume that this is not true, then $ u_i,v,u_{i+1} $ are contained in a single face $f$, and $u_i,u_{i+1}$ are not neighbours. Let $w$ be the other neighbour of $u_i$ in $f$; since $G$ contains no adjacent light neighbours, $w$ is heavy. So adding an edge between $v,w$ inside $f$ would not create adjacent vertices whose degrees sum to less than 11 nor create a face of length 2, which contradicts our choice of $G$.  Thus $v$ does not have 2 consecutive light neighbours, and so has at most as many light neighbours as heavy neighbours.  Let $l$ and $h$ be the number of light and heavy neighbours of $v$. Suppose $v$ has a neighbour $u$ of degree 3. 
+ Let $u_1,u_2,..,u_l$ be the neighbours of $v$ in clockwise order and let $u_{l+1}=u_1$. We claim that $u_i,u_{i+1}$ cannot both have degrees less than 6. For the sake of contradiction assume that this is not true, then $ u_i,v,u_{i+1} $ are contained in a single face $f$, and $u_i,u_{i+1}$ are not neighbours. Let $w$ be the other neighbour of $u_i$ in $f$; since $G$ contains no adjacent light neighbours, $w$ is heavy. So adding an edge between $v,w$ inside $f$ would not create adjacent vertices whose degrees sum to less than 11 nor create a face of length 2, which contradicts our choice of $G$.  Thus $v$ does not have 2 consecutive light neighbours, and so has at most as many light neighbours as heavy neighbours.  Let $l$ and $h$ be the number of light and heavy neighbours of $v$. We consider 3 cases.
  
- Vertex $v$ starts with charge at most $6-l-h$ and it receives charge at most 1 from each light neighbour and none from heavy neighbours. So the charge of $v$ is at most  $6-l-h +l =6 -h $.  So v has at most 5 heavy neighbours and hence at most 10 neighbours. Since $v$ is adjacent to $u$ which has degree 3, this proves the lemma. 
+ Suppose $v$ has a neighbour $u$ of degree 3. Vertex $v$ starts with charge at most $6-l-h$ and it receives charge at most 1 from each light neighbour and none from heavy neighbours. So the charge of $v$ is at most  $6-l-h +l =6 -h $.  Thus v has at most 5 heavy neighbours and hence at most 10 neighbours. Since $v$ is adjacent to $u$ which has degree 3, this proves the lemma. 
  
  %So  $u$ and $v$ form adjacent vertices whose degrees sum to at most 13. 
- For the next case, suppose $v$ has no neighbour of degree of exactly 3, and some neighbour $u$ of degree 4.  A vertex of degree 4 or more sends a charge of at most 0.5. Therefore $v$ has charge at most $ 6-l-h +0.5l $.   So the charge of $v$, which is positive, is at most $ 6-0.5l-h $, which is at most  $6- 0.75(h+l) $. Hence $v$ has degree at most 7. Consequently, $v,u$ are a pair of adjacent vertices whose degrees sum to at most 11. 
+ For the next case, suppose $v$ has no neighbour of degree of exactly 3, and some neighbour $u$ of degree 4.  A vertex of degree 4 or more sends a charge of at most 0.5. Therefore, $v$ has charge at most $ 6-l-h +0.5l $.   So the charge of $v$, which is positive, is at most $ 6-0.5l-h $, which is at most  $6- 0.75(h+l) $. Hence $v$ has degree at most 7. Consequently, $v,u$ are a pair of adjacent vertices whose degrees sum to at most 11. 
  
  If neither of the previous assumptions hold, then all the light neighbours of $v$ have degree 5. Then $v$ has charge at most $ 6-l-h +0.2l $ which is at most $6-0.9(h+l) $. Because the charge is positive, $v$ has degree at most 6. Let $u$ be any light neighbour of $v$, then $u$ and $v$ are a pair of adjacent vertices whose degrees sum to at most 11.
  \end{proof}
@@ -317,7 +317,7 @@ Lemma \ref{discharge} is indeed tight, and there are example graphs satisfying t
 no pair of adjacent vertices has degree sum less than 13. One such example is the {\em stellated icosahedron}
 shown in Figure \ref{StellatedIco}. The above proof of Lemma \ref{discharge} provides a quite precise
 characterization of tight instances $G$ satisfying the Lemma's conditions. Let $u, v$ be two adjacent vertices
-whose degree sum to $13$ in such a graph $G$, and suppose, w.l.o.g., that $v$ has degree no smaller than that
+whose degrees sum to $13$ in such a graph $G$, and suppose, w.l.o.g., that $v$ has degree no smaller than that
 of $u$. Then the above proof shows that $v$ has degree $10$ and $u$ has degree $3$. Moreover, light and heavy
 neighbours of $v$ alternate, and at least $4$ of the light neighbours of $v$ must have degree exactly $3$. 
 
@@ -325,15 +325,12 @@ There is even more structure! Tightness of Lemma \ref{discharge} also implies th
 counter-example. Consider a face $f$ incident to $v$ containing a light neighbour $v'$ of $v$. 
 Let $u'$ be the other neighbour of $v$ on the same face. Since light and heavy neighbours of $v$
 alternate, $u'$ must be a heavy neighbour. We argue that $f$ must be a face of length $3$. If not, then $v'$
-has a neighbour $w$ on $f$ different from $v$ and $u'$. This node $u'$ must be heavy, and hence we would be
-able to add edge $vw$ to $G$ without violating planarity. A contradiction to $G$'s maximality. This shows that
+has a neighbour $w$ on $f$ different from $v$ and $u'$. This node $w$ must be heavy, and hence we would be
+able to add edge $vw$ to $G$ without violating planarity, which is a contradiction to $G$'s maximality. This shows that
 all faces incident to $v$ have length $3$. 
 In the following, we call a vertex $v$ {\em particular} if it has degree $10$, its neighbours are alternating
 light and heavy, and all its incident faces have length $3$. 
   
-
-Denote the dual of a graph $G$ embedded in the plane by $G^*$.   
-
 In particular, the above lemma has the following consequence:
 
 \begin{cor}\label{cor:smallec}
@@ -355,7 +352,7 @@ By lemma \ref{discharge}, there are 2 faces $f_1,f_2 \subset E$ of $G$ whose tot
     3 in the same graph. Figure (ii) shows a graph in which every even cycle is long. }
 \end{figure}
 
-Hao's notes have a self-contained proof of the above two statements.
+%Hao's notes have a self-contained proof of the above two statements.
 From here, our algorithm follows the ideas provided in \cite{FJP10},
 simplifying and adapting to even cycles where possible. 
 
@@ -388,7 +385,7 @@ residual graph {\em at the time} when $v$ was chosen.
   short cycle in the 1-compression $G_1$ of the graph $G[V\setminus
   X]$ at the time where $y_C$ was increased. 
   In Figure
-  \ref{fig:simplepd}.(i), white nodes have degree $2$ in $G[V\setminus
+  \ref{fig:simplepd}.(i), white nodes have degree two in $G[V\setminus
   X]$, and grey nodes have degree at least three. Hence the cycle
   depicted has length $7$ in $G_1$. Suppose that $v \in V(C) \cap
   \bar{X}$ is a node on $C$ that was chosen by our algorithm for the
@@ -402,7 +399,7 @@ residual graph {\em at the time} when $v$ was chosen.
   $P_{uw}$ including $u$ and $w$ themselves. Thus, if $\bar{X}$
   contains $v$ then it contains no other nodes from $P_{uw}$.
 
-  Now suppose that $v \in \bar{X} \cap C_1$ is node of
+  Now suppose that $v \in \bar{X} \cap C_1$ is a node of
   degree at least three on $C$, and let $u$ and $w$ be the neighbours
   of $v$ on $C_1$. Using the same argument as before, we see that
   no internal vertex of $P_{uv}$ and $P_{wv}$ can be in $\bar{X}$ in
@@ -759,11 +756,11 @@ condition (b) above. Otherwise, the union of $f_1$ and $f_2$ contains an even cy
 without twin edges of length at most $11$, and hence condition (a) holds. 
 \end{proof}
 % intro to 10 apx
-One can improve the 11-approximation by noting that tightness in Corollary \ref{cor:smallec improved} only happens in a very specific case. In particular it requires tightness of Lemma \ref{discharge} for $G_2^*$. That is, suppose nodes $v$ and $u$ of $G_2^*$ have degrees summing up to 12 or less. Then either the face $v$, or  face $u$, or the  cycle $C$ consisting of the disjoint union of the face $v$ and the neighbouring face $u$ is even.  If $u$ or $v$ is an even face of $G_2$, then we get an even cycle with 9 or fewer pieces, otherwise $C$ has at most 10 pieces, none of which is twin.  
-%For the next part, let us modify which nodes were added to our ECT as follows. We remove any nodes that were not paid for by our blended diamond inequality, and if two internal nodes of a type 2 cycle were selected, we instead choose an end-node of that cycle and declare that that vertex is selected instead. This does not decrease  $\sum_{v \in \bar{X}} a^{C'_1,C'_2}_v $.   Given an edge $uv$ in $G_2$, let $p(u,v)$ denote the piece corresponding to $uv$ in $G$.
+Denote the dual of a graph $G$ embedded in the plane by $G^*$. One can improve the 11-approximation by noting that tightness in Corollary \ref{cor:smallec improved} only happens in a very specific case. In particular it requires tightness of Lemma \ref{discharge} for $G_2^*$. That is, suppose nodes $v$ and $u$ of $G_2^*$ have degrees summing up to 12 or less. Then either the face $v$, or  face $u$, or the  cycle $C$ consisting of the disjoint union of the face $v$ and the neighbouring face $u$ is even.  If $u$ or $v$ is an even face of $G_2$, then we get an even cycle with 9 or fewer pieces, otherwise $C$ has at most 10 pieces, none of which is twin.  
+%For the next part, let us modify which nodes were added to our ECT as follows. We remove any nodes that were not paid for by our blended diamond inequality, and if two internal nodes of a type 2 cycle were selected, we instead choose an end-node of that cycle and declare that that vertex is selected instead. This does not decrease  $\sum_{v \in \bar{X}} a^{C'_1,C'_2}_v $.   
 Otherwise by the discussion following Lemma \ref{discharge} $G_2^*$ has a particular vertex.  Let us define a notion of what the corresponding face of a particular vertex of $G_2^*$ looks like.
 \begin{definition}
-Let us call a face $f$ of $G_2$ \emph{particular}, if in $G_2^*$ $f$ has exactly 5 light and 5 heavy neighbours, and they alternate in the clockwise order around $f$. We  also require that at least 4 of the light neighbours of $f_1$ in $G^*$ have degree 3. Further, in $G_2$ edges lying on both $f$ and a  face of length 3 have both endpoints degree 3.
+Let us call a face $f$ of $G_2$ \emph{particular}, if  $f$ is adjacent to exactly 5 faces of degree 5 or less and 5 faces of degree 6 or more, and they alternate in the clockwise order around $f$. We  also require that at least 4 of the faces of length 5 or less have length 3. Further all vertices on $f$ have degree 3.
 \end{definition}
 We state our above observations in the following lemma:
 \begin{lemma}\label{improved ec}
@@ -774,7 +771,7 @@ twin edges of length at most $10$. \\
 (c) The graph $G_2$ contains an even cycle without twin edges of length $11$ that contains exactly 2 faces $f_1$ and $f_2$, and $f_1$ is particular. \\  % Further, $f_1$ has length 10 and $f_2$ length 3. In $G_2^*$ $f_1$ has exactly 5 light and 5 heavy neighbours  and they alternate in the clockwise order around $f_1$. Also, at least 4 of the light neighbours of $f_1$ in $G^*$ have degree 3. Further, in $G_2$ edges lying on both $f_1$ and a  face of length 3 have both endpoints degree 3. \\
 (d) The graph $G_2$ contains a particular face $f$ that contains a twin edge.  %In $G_2^*$ $f$ has exactly 5 light and 5 heavy neighbours, and they alternate in the clockwise order around $f$. Also, at least 4 of the light neighbours of $f_1$ in $G^*$ have degree 3. Further, in $G_2$ edges lying on both $f$ and a  face of length 3 have both endpoints degree 3. 
 \end{lemma} 
-The algorithm for this part will first look for an even cycle with 10 or fewer edges in the 1-compression. Then it will look for an even cycle with 9 or fewer edges in $G_2$. If both previous steps fail to find an even cycle, we then choose an even cycle of $G_2$ that is guaranteed by Lemma \ref{improved ec}. Denote this cycle by $C$ and let $\sum_v a_v^C x_v \geq 1 $ be the blended inequality for $C$. Increment the dual variable for this inequality until a  constraint $\sum_{(C'_1,C'_2) \in \C} a^{C'_1,C'_2}_vy_{C'_1,C'_2} \leq c_v $ of the LP (\ref{lp:d3}) becomes tight. Add newly tight nodes to $X$.  At the end of the algorithm when all even cycles intersect a node of $X$, run a reverse deletion procedure on $X$ to obtain $\bar{X}$. 
+The algorithm for this part will first look for an even cycle with 10 or fewer edges in the 1-compression. If this cannot be found, it will look for an even cycle with 9 or fewer edges in $G_2$. If both previous steps fail to find an even cycle, we choose an even cycle of $G_2$ that is guaranteed by Lemma \ref{improved ec}. Denote this cycle by $C$ and let $\sum_v a_v^C x_v \geq 1 $ be the blended inequality for $C$. Increment the dual variable for this inequality until a  constraint $\sum_{(C'_1,C'_2) \in \C} a^{C'_1,C'_2}_vy_{C'_1,C'_2} \leq c_v $ of the LP (\ref{lp:d3}) becomes tight. Add newly tight nodes to $X$.  At the end of the algorithm when all even cycles intersect a node of $X$, run a reverse deletion procedure on $X$ to obtain $\bar{X}$. 
 \begin{theorem}
   The algorithm described above is a 10-approximation.
 \end{theorem}
@@ -784,35 +781,40 @@ The algorithm for this part will first look for an even cycle with 10 or fewer e
 %We now modify our algorithm to return either an even cycle with 8 pieces or one that is contained in the projection of once of the cases of Lemma \ref{improved ec}.
 \begin{proof} 
 % 10 apx case a) or b)
-To prove that this is a 10-approximation, we will show the set $\bar{X}$ returned by our algorithm satisfies $\sum_{v\in \bar{X}} a_v^C  \leq 10 $. If $C$ is a cycle in the 1-compression with 10 or fewer pieces, then the claim is clear.  Otherwise, let $\bar{X}'$ be obtained from $\bar{X}$ by first removing any nodes not in the support of $a^C$.  Next, while $ \bar{X}'$ contains  an internal node on both handles of a type 2 cycle, we replace the 2 nodes with an end node of one of the handles.  We have $\sum_{v\in \bar{X}'} a_v^C \geq \sum_{v \in \bar{X}} a_v^C$. We now prove $\sum_{v\in \bar{X}'} a_v^C \leq 10$.
+To prove that this is a 10-approximation, we will show the set $\bar{X}$ returned by our algorithm satisfies $\sum_{v\in \bar{X}} a_v^C  \leq 10 $. If $C$ is a cycle in the 1-compression with 10 or fewer pieces, then the claim is clear.  Otherwise, let $\bar{X}'$ be obtained from $\bar{X}$ by first removing any nodes not in the support of $a^C$.  Next, while $ \bar{X}'$ contains  an internal node on both handles of a type 2 cycle, we replace the 2 handles of our graph with a single path of length 3 and replace the 2 nodes with a single node.  We have $\sum_{v\in \bar{X}'} a_v^C \geq \sum_{v \in \bar{X}} a_v^C$. This modification of $X$ and our graph is purely to make the proof work more smoothly and are not part of our algorithm. We now prove $\sum_{v\in \bar{X}'} a_v^C \leq 10$.
 %We now prove the 10-approximation as follows. 
-If $C$ satisfies case (a) or (b) of Lemma \ref{improved ec},  the 10-approximation follows in the same manner as the previous 11-approximation.  Suppose we are in case (c), denote the vertices of $f_1$ by  $v_1,v_3,v_4 ,.., v_{11}$, and the node of $f_2$ not on $f_1$ by $v_2$.  Let $v_i t v_{i+1}$ be a triangle face sharing an edge with $f_1$ that is not $f_2$. By assumption, this face has odd length in $G$.
+If $C$ satisfies case (a) or (b) of Lemma \ref{improved ec},  the 10-approximation follows in the same manner as the previous 11-approximation.  Suppose we are in case (c), denote the vertices of $f_1$ by  $v_1,v_3,v_4 ,.., v_{11}$, and the node of $f_2$ not on $f_1$ by $v_2$.  Let $v_i t v_{i+1}$ be a triangle face sharing an edge with $f_1$ that is not $f_2$. There are 4 of these and they have no twin edges. % By assumption, this face has odd length in $G$.
+Given an edge $uv$ in $G_2$, let $p(u,v)$ denote the piece corresponding to $uv$ in $G$.
 \begin{remark}\label{consecutive}
-Let $ t v_i v_{i+1} $ be a face of length 3 of $G_2$ which has odd length in $G$ with no twin edges. Let $ v_{i-1} $ be a neighbour of $v_i$, and $v_{i+2}$ a neighbour of $v_i$. Suppose that $v_i $ and $v_{i+1}$ have no other neighbours. Then  $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) $  contains fewer than 3 hit nodes; see Figure \ref{b-faceAndLastdnodeAndCon} (iii).
+Let $ t v_i v_{i+1} $ be a face of length 3 of $G_2$ which has odd length in $G$ with no twin edges. Let $ v_{i-1} $ be a neighbour of $v_i$, and $v_{i+2}$ a neighbour of $v_{i+1}$. Suppose that $v_i $ and $v_{i+1}$ have no other neighbours. Then  $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) $  contains at most 2 hit nodes; see Figure \ref{b-faceAndLastdnodeAndCon} (iii).
   % Let  non twin edge distinct from $ v_1 v_3 $ , let $ v_i t_i v_{i+1}$  be the triangle face  using $v_i, v_{i+1} $ if each of $v_i, v_{i+1}$ is incident to exactly 3 faces. 
 \end{remark}
 \begin{proof}
 %proof
- Suppose that $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) $ contains 3 hit nodes. Let $w$ be the  ``middle" hit node. Then each of $ p(v_{i-1} , v_i ) $ and $ p(v_{i+1},v_{i+2} ) $ contains a hit node besides w. Let $A_w$ be a witness cycle for $w$, and consider the subpath $ Q_w$ of $A_w$ containing $w $ and lying in $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) \cup p(v_{i+1},t) \cup p(v_i,t)  $  such a path cannot use nodes of $ p(v_{i-1} , v_i ) \backslash v_i ,p(v_{i+1},v_{i+2} ) \backslash v_{i+1} $  and hence both ends of the path are  $t$ and so $A_w$ is the projection of $t v_i v_{i+1} $. But by assumption this cycle is odd in $G$, which is a contradiction.  
+ Suppose that $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) $ contains 3 hit nodes. Let $w$ be the  ``middle" hit node. That is if $ (p(v_i,v_{i+1} ) \backslash v_i ) \backslash v_{i+1} $ contains a hit node define $w$ to be that hit node. Otherwise, one of $p(v_{i-1} , v_i ), p(v_{i+1},v_{i+2} ) $ contains 2 hit nodes. If $p(v_{i-1} , v_i )$ contains 2 hit nodes, then $v_i$ is a hit node and we define $w=v_i$, otherwise define $w=v_{i+1}$.
+ %if $ p(v_{i-1} , v_i ) \backslash v_i $ contains a hit node, define $w$ to be the hit node on $p(v_i,v_{i+1} ) \backslash v_{i+1}$, otherwise define $w$ to be the hit node on $ p(v_i,v_{i+1}) \backslash v_i, p(v_{i+1}) \backslash v_i$ 
+ Then each of $ p(v_{i-1} , v_i ) $ and $ p(v_{i+1},v_{i+2} ) $ contains a hit node besides w. Let $A_w$ be a witness cycle for $w$, and consider the subpath $ Q_w$ of $A_w$ containing $w $ and lying in $ p(v_{i-1} , v_i ) \cup p(v_i,v_{i+1} ) \cup p(v_{i+1},v_{i+2} ) \cup p(v_{i+1},t) \cup p(v_i,t)  $  such a path cannot use nodes of $ p(v_{i-1} , v_i ) \backslash v_i ,p(v_{i+1},v_{i+2} ) \backslash v_{i+1} $  and hence both ends of the path are  $t$ and so $t v_i v_{i+1} $  is the projection of $A_w$. But by assumption this cycle is odd in $G$, which is a contradiction.  
 \end{proof} 
 
 %using remark to finish proof
-Thus $p(v_{i-1},v_i) \cup p(v_{i},v_{i+1}) \cup p(v_{i},v_{i+1})$ contains at most 2 hit nodes. The remaining 8 pieces have at most 8 hit nodes not counting $v_{i-1},v_{i+2}$, which implies $\sum_{v \in X} a^{C'_1,C'_2}_v x_v \leq 10$.  Case (d) is similar. Let $G'$ be the graph obtained from $G$ by deleting the interior nodes of one handle of a type 3 cycle. Let the even cycle be $v_1 v_2 ... v_{10}$, and $v_i,t,v_{i+1}$ be a triangle face of $G_2$. By remark \ref{consecutive} the union  $p(v_{i-1},v_i) \cup p(v_{i},v_{i+1}) \cup p(v_{i},v_{i+1})$ contains at most 2 hit nodes. The remaining 7 pieces with $v_{i-1},v_{i+2}$ removed contain at most 7 hit nodes,  which again proves $\sum_{v \in X} a^{C'_1,C'_2}_v x_v \leq 10$. 
+%Thus $p(v_{i-1},v_i) \cup p(v_{i},v_{i+1}) \cup p(v_{i},v_{i+1})$ contains at most 2 hit nodes. 
+The remaining 8 pieces have at most 8 hit nodes not counting $v_{i-1},v_{i+2}$, which implies $\sum_{v \in X} a^{C'_1,C'_2}_v x_v \leq 10$.  Case (d) is similar. Let $G'$ be the graph obtained from $G$ by deleting the interior nodes of one handle of a type 3 cycle. Let the even cycle be $v_1 v_2 ... v_{10}$, and $v_i,t,v_{i+1}$ be a triangle face of $G_2$. By remark \ref{consecutive} the union  $p(v_{i-1},v_i) \cup p(v_{i},v_{i+1}) \cup p(v_{i},v_{i+1})$ contains at most 2 hit nodes. The remaining 7 pieces with $v_{i-1},v_{i+2}$ removed contain at most 7 hit nodes,  which again proves $\sum_{v \in X} a^{C'_1,C'_2}_v x_v \leq 10$. 
  \end{proof}
  %introducing the 9 apx
  By being a bit more careful in our book-keeping, we can get a 9-approximation.
  
- \begin{lemma}\label{light+}  \cite{JV13} 
+ \begin{lemma}\label{light+}  \cite{JV13} (Theorem 3.1)
 A planar multigraph $ G=(V,E)$ where every vertex has  at least 3 neighbours embedded with no face of length 2 contains  an  edge $uv$ such that one of the following is true: \\
-1) $u$ has degree 3 and if $v$ has degree more than 6 it has degree at most $2a_1 + a_2 + 2c +d $ with $ 6-(a_1+a_2) -1.5c -d -b > 0 $. Here $ a_1 $ is the number of neighbours $w $ of degree 3 for which  the next neighbour of $v$  in the clockwise order is heavy and $a_2$ is the number of other neighbours of degree 3.  %  of $G$ that contain $vw$ are triangles, $a_2$ is the number of neighbours $w$ of $v$ of degree 3 for which not both faces of $G$ that contain $uw$ are triangles 
-$c$ is the number of neighbours of degree 4 or 5. $b$ is the number of faces of length 4 or more containing $v$ and both a light and heavy neighbour of $v$ in $G$. $d$ is the number of heavy neighbours $w$ of $v$ whose such that the next clockwise neighbour of $v$ is also heavy; see Figure \ref{Triangulating}. \\ % $b$ is the number of faces of  
+1) $u$ has degree 3 and if $v$ has degree more than 6 it has degree at most $2a_1 + a_2 + 2c_1+c_2 +d $ with $ 6-(a_1+a_2) -1.5(c_1+c_2) -d -b > 0 $. Here $ a_1 $ is the number of neighbours of degree 3 for which  the next neighbour of $v$  in the clockwise order is heavy and $a_2$ is the number of other neighbours of degree 3.  %  of $G$ that contain $vw$ are triangles, $a_2$ is the number of neighbours $w$ of $v$ of degree 3 for which not both faces of $G$ that contain $uw$ are triangles 
+$c_1$ is the number of neighbours of degree 4 or 5 for which the next neighbour of $v$ in the clockwise order is heavy, and $c_2$ is the number of other neighbours of degree 4 or 5. $b$ is the number of faces of length 4 or more containing $v$ and both a light and heavy neighbour of $v$ in $G$. $d$ is the number of heavy neighbours $w$ of $v$ whose such that the next clockwise neighbour of $v$ is also heavy; see Figure \ref{Triangulating}. \\ % $b$ is the number of faces of  
 2) $  \text{deg}(u) + \text{deg}(v) \leq  11. $ % \text{max} (10, 11 -b -c_2 ) $ where $c_2$ is the number of light neighbours of $v$ for which either the next  (in the clockwise order) is light. \\
 
 \end{lemma}
+When  $G$ and $v \in V(G)$ are specified we will denote by $a'_1,a'_2,b',d',c'_1,c'_2$ neighbours as those neighbours of $v$ counted by $a_1,a_2,b,d,c_1,c_2$ respectively and a $a'_1,a'_2,b',d',c'_1,c'_2$  edge as an edge between $v$ and a $a'_1,a'_2,b',d',c'_1,c'_2$ neighbour respectively. We also say that a face of $G^*$ is an $a'_1,a'_2,b',d',c'_1,c'_2$ face if the face corresponds to an $a'_1,a'_2,b',d',c'_1,c'_2$ vertex of $G$ respectively.
 \begin{proof}
 %(of part not in \cite{JV13})
 %proof up to a reasonable length
- If $G$ contains  2 adjacent light neighbours, we are done. Otherwise, let $G'$ be a triangulation of $G$ by drawing edges between heavy vertices. Note that this is possible, since any face of length four or more contains 2 heavy nodes, and we can add an edge between them.  Just as in \cite{JV13}, by maximality of our triangulation $v$ cannot have 2 consecutive light neighbours in $G'$.
+ If $G$ contains  2 adjacent light neighbours, the proof is clear. Otherwise note that each heavy neighbour of $v$ either follows an $a_1$ neighbour, a $c_1$ neighbour, or another heavy edge and are counted by $a_1,c_1,d$ respectively. Thus $v$ has degree at most $2a_1 + a_2 + 2c_1+c_2 +d $. Let $G'$ be a triangulation of $G$ by drawing edges between heavy vertices. Note that this is possible, since any face of length four or more contains 2 heavy nodes, and we can add an edge between them.  Just as in \cite{JV13}, by maximality of our triangulation $v$ cannot have 2 consecutive light neighbours in $G'$.
 
 \begin{figure}[h]
     % \includegraphics[scale=0.28]{PreTriang.png}
@@ -837,7 +839,10 @@ $c$ is the number of neighbours of degree 4 or 5. $b$ is the number of faces of 
 %Let $f'$ be the number of non heavy neighbours of $v$ in $ G' -G $.
 %logical spot to break up long paragraph
 
-We claim $v$ has degree at least  $2a_1 +2a_2+2c+d +b  $ in $G'$. First, let $f_1, f_2,.., f_b$ be the $b$-faces of $G$ that is the faces that $b$ is counting. Let $E'$ be the set of edges of $\delta_{G'} (v)$ contained in the interior of some $f_i$ and $E''$ be the $d$-edges, that is the edges whose endpoint other than $v$ is counted by $d$.  In any $f_i$ one neighbour $u$ of $v$ is light and the other $u'$ is heavy. Therefore $uu'$ is not an edge of $G'$. So $ \delta_{G'}(v) $ contains an edge in the interior of $f_i$. It thus suffices to prove that $ | \delta_{G'}(v) \backslash E' \backslash E'' | \geq  2a_1 +2a_2+2c$.  We claim that in $ (G' \backslash E' ) \backslash E'' $ there are no consecutive light neighbours of $v$. Assume for a contradiction that there were 2 such neighbours $w,w'$ with $w'$ the next neighbour after $w$ in $ (G' \backslash E' ) \backslash E'' $ in the clockwise order about $v$. Suppose that there is a $d$ neighbour $u'$ between $w$ and $w'$ in $G'$, let $u''$ be the last such $d$ neighbour of $ v $ before $w'$ in the clockwise order. Then there is a heavy non $d$ -neighbour $q$ of $v$ in $G$  which lies between $ u''$ and $w' $.  So henceforth we assume that no $d$-neighbours lie between $w$ and $ w'$ in the clockwise order about $v$ in $G'$.  
+We claim $v$ has degree at least  $2a_1 +2a_2+2(c_1+c_2) +d +b  $ in $G'$. First, let $f_1, f_2,.., f_b$ be the $b'$-faces of $G$. %that is the faces that $b$ is counting.
+Let $E'$ be the set of edges of $\delta_{G'} (v)$ contained in the interior of some $f_i$ and $E''$ be the $d$-edges.
+%that is the edges whose endpoint other than $v$ is counted by $d$. 
+In any $f_i$ one neighbour $u$ of $v$ is light and the other $u'$ is heavy. Therefore $uu'$ is not an edge of $G'$. So $ \delta_{G'}(v) $ contains an edge in the interior of $f_i$. It thus suffices to prove that $ | \delta_{G'}(v) \backslash E' \backslash E'' | \geq  2a_1 +2a_2+2c$.  We claim that in $ (G' \backslash E' ) \backslash E'' $ there are no consecutive light neighbours of $v$. Assume for a contradiction that there were 2 such neighbours $w,w'$ with $w'$ the next neighbour after $w$ in $ (G' \backslash E' ) \backslash E'' $ in the clockwise order about $v$. Suppose that there is a $d$ neighbour $u'$ between $w$ and $w'$ in $G'$, let $u''$ be the last such $d$ neighbour of $ v $ before $w'$ in the clockwise order. Then there is a heavy non $d$ -neighbour $q$ of $v$ in $G$  which lies between $ u''$ and $w' $.  So henceforth we assume that no $d$-neighbours lie between $w$ and $ w'$ in the clockwise order about $v$ in $G'$.  
 
 %good spot to break up??
 Let $u'$ be the previous neighbour before $w'$ in $G'$. % Since $u'$ is heavy and $u'$ and the next neighbour in the clockwise order is light, $u' \notin E''$ 
@@ -845,7 +850,7 @@ Let $u'$ be the previous neighbour before $w'$ in $G'$. % Since $u'$ is heavy an
 Assume $vu \in  E'$ so $u' \in f_j$ for some $f_j$. Note  $f_j$ contains 2 consecutive neighbours of $v$ in $G$ and contains the edge $vu$ in its interior, and $u$ lies between $w,w'$ in the clockwise order. So the neighbours of $v$ in $f_j$ lie between $w,w'$ in the clockwise order. So $f_j$ must contain  $vw$ or  $ vw'$.  Since one of them is light, that neighbour must be $w$ or $w'$.  Let  $w''$ be the  one of $w,w'$ contained in $f_j$ and let $u''$ be the other neighbour of $v$ in $G$, then $u''$ lies between $w,w'$ in the clockwise order, which is a contradiction.  %Since both $w,w'$ are neighbours of $v$ in $G$,  $w'', u''$ or $ u'',w'' $ are consecutive.  %  the case that $u''$ is a $d$-neighbour was already addressed. %since $u$ is a  and hence  and light neighbours of $v$ in $f_j$ respectively, then $u''$ lies (as a neighbour) clockwise of $w$ and counterclockwise of $w'$ and further $u''$ lies counterclockwise of $u''$ and hence $f_j$  contains $vw'$ (rather than $vw$ ).  This implies that $v u' \notin E'' $ but $vu'$ lies between (in the clockwise order about v) $w,w'$ which is a contradiction
 Hence there are no 2 consecutive light neighbours.  
 % seemed like a good point to break up the proof
-Since each light edge is preceded and followed by a heavy edge hence $ |\delta_{G'}(v) \backslash E' \backslash E'' | \geq  2a_1 +2a_2+2c$. Calculating charge thus gives us $ 6-(a_1+a_2) -1.5c -d -b > 0 $.
+Since each light edge is preceded and followed by a heavy edge hence $ |\delta_{G'}(v) \backslash E' \backslash E'' | \geq  2a_1 +2a_2+2(c_1+c_2)$. Calculating charge thus gives us $ 6-(a_1+a_2) -1.5c -d -b > 0 $.
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{b-faceAndLastdnodeAndConhit.pdf}
@@ -855,51 +860,43 @@ Since each light edge is preceded and followed by a heavy edge hence $ |\delta_{
 %Now suppose that  $\text{deg}_{G'}(u)+ \text{deg}_{G'}(v) \leq 11$. Now each $c_2$ neighbour must be followed in the clockwise order  by a heavy neighbour in $G'$ and each $b$-face $f_j$ contains an edge of $E(G') \backslash E(G)$ in it's interior. Thus  $  \text{deg}(u) + \text{deg}(v) \leq 11 -b -c_2 $.
 \end{proof}
 %\p definition paragraph
-When  $G$ and $v\in G$ are specified we will denote by $a_1,a_2,b,d,c$ neighbours as those neighbours of $v$ counted by $a_1,a_2,b,d,c$v respectively and a $a_1,a_2,b,d,c$  edge as an edge between $v$ and a $a_1,a_2,b,d,c$ neighbour respectively.
 %
 \begin{remark}\label{light+r}
-In case 1) of lemma \ref{light+} we have that $v$ has degree at most $ 10 - a_2 -2 \lfloor 0.5c \rfloor -d -2b$
+In case 1) of lemma \ref{light+} we have that $v$ has degree at most $ 10 - a_2 -c_2 -2 \lfloor 0.5(c_1+c_2) \rfloor -d -2b$
 \end{remark}
-\begin{proof}  Using same variables as Lemma \ref{light+}, $ 6 > (a_1+a_2) +1.5c +d +b $ so $ 5 \geq \lfloor (a_1+a_2) +1.5c +d +b \rfloor $ so  $ 5-(a_1+a_2) - \lfloor 1.5c \rfloor -d -b \geq 0$ which implies $  10 \geq 2(a_1+a_2) +2c +2 \lfloor 0.5c \rfloor +2d +2b \geq \text{deg}(v)  +a_2 +2 \lfloor 0.5c \rfloor +d +2b  $.
+\begin{proof}  Using same variables as Lemma \ref{light+}, we get $ 6 > (a_1+a_2) +1.5(c_1+c_2) +d +b $ so $ 5 \geq \lfloor (a_1+a_2) +1.5(c_1+c_2) +d +b \rfloor $ so  $ 5-(a_1+a_2) - \lfloor 1.5(c_1+c_2) \rfloor -d -b \geq 0$ which implies $  10 \geq 2(a_1+a_2) +2(c_1+c_2) +2 \lfloor 0.5(c_1+c_2) \rfloor +2d +2b \geq \text{deg}(v)  +a_2 +c_2 +2 \lfloor 0.5c \rfloor +d +2b  $.
 \end{proof}
 %
 \begin{lemma}\label{even reduced+}
 We can find a cycle $C$ of $G_2$, even in $G$ such that either: \\
-1)  $C$ is the union of 2 faces $f_1$ and $f_2$ of $G_2$ with, $f_1$ length 3 and at most  $ \text{max}(9, 11- a_2 -2 \lfloor 0.5 c \rfloor -d  -b $) pieces.   Where $ a_2, c ,d ,b $ are as in Lemma \ref{light+}  for $G_2^*$ with $v=f_1$  and $C$ is disjoint from the interior of any double piece. \\ 
+1)  $C$ is the union of 2 faces $f_1$ and $f_2$ of $G_2$ with, $f_1$ length 3 and at most  $ \text{max}(9, 11- a_2-c_2 -2 \lfloor 0.5 (c_1+c_2) \rfloor -d  -b $) pieces. \\  %Where $ a_2, c_1,c_2 ,d ,b $ are as in Lemma \ref{light+}  for $G_2^*$ with $v=f_1$  and $C$ is disjoint from the interior of any double piece. \\ 
 2) $C$ has at most 9 pieces and is disjoint from the interior of any double piece. \\
-3) $C$ has at most $10- a_2 -2 \lfloor 0.5 c \rfloor -d  -b $  pieces. One piece may be double. \\
+3) $C$ has at most $10- a_2 -c_2 -2 \lfloor 0.5 (c_1+c_2) \rfloor -d  -b $  pieces. One piece may be double. \\
 4) $C$ has at most 7 pieces. \\
-Where for 1),2) $a_1,a_2, c, d, b ,c_2$ are as in Lemma \ref{light+} with  $ v=v_2$  $u=f_1$ in the dual of $G_2$.
+Where for 1),3) $a_1,a_2, c, d, b ,c_2$ are as in Lemma \ref{light+} with  $ v=v_2$  $u=f_1$ in the dual of $G_2$.
 \end{lemma}
 \begin{proof}
 %\p proof
- Apply Lemma \ref{light+} to $G_2^*$.  In case 1) of Lemma \ref{light+}  we find a node $u$ of degree 3 adjacent to a node $v$ of degree at most $10-a_2-2\lfloor 0.5 c \rfloor -d -b$  in $H^*$. Here $a_2,c,d,b$ are as in Lemma \ref{light+}. Let $f_1 , f_2$ be the faces corresponding to $v,u$ in G if $f_1$ or $f_2$ is even such an even cycle satisfies the conditions of out lemma. Otherwise, $f_1 \cup f_2$ is an even cycle in G with at most  $11- a_2 -2 \lfloor 0.5 c \rfloor -d  -b $ pieces. Case 2) is similar.
+ Apply Lemma \ref{light+} to $G_2^*$.  In case 1) of Lemma \ref{light+}  we find a node $u$ of degree 3 adjacent to a node $v$ of degree at most $10-a_2-c_2-2\lfloor 0.5 (c_1+c_2) \rfloor -d -b$  in $G^*$. Here $a_2,c_1,c_2,d,b$ are as in Lemma \ref{light+}. Let $f_1 , f_2$ be the faces corresponding to $v,u$ in G if $f_1$ or $f_2$ is even such an even cycle satisfies the conditions of out lemma. Otherwise, $f_1 \cup f_2$ is an even cycle in G with at most  $11- a_2 -2 \lfloor 0.5 c \rfloor -d  -b $ pieces. Case 2) is similar.
 \end{proof}
-
+Our revised algorithm for this part will first look for an even cycle with 9 or fewer edges in the 1-compression. If this cannot be found it will then look for an even cycle satisfying lemma \ref{even reduced+} and return case 4) (at most 7 pieces) if possible. We claim this algorithm is a 9-approx. 
 \begin{proof} 
 % \p breaking proof into cases and case 1)
-Let us consider each case of Lemma \ref{even reduced+}. 
+Let us consider each case of Lemma \ref{even reduced+}. Define $c:=c_1+c_2$. 
 
-Case 1). If $C$ has fewer than 9 pieces we are done. Otherwise let $v_1, v_2, .., v_l$ be the cycle $C$ in $G_2$, with $v_1, v_2, v_3$ vertices belonging to a triangle face of $G_2$. We denote: \begin{equation}
+Case 1). If $C$ has 9 or fewer pieces the proof is clear. Otherwise, $b=0, \ \ c \leq 1$, let $v_1, v_2, .., v_l$ be the cycle $C$ in $G_2$, with $v_1, v_2, v_3$ vertices belonging to a triangle face of $G_2$. We denote: \begin{equation}
     p'(v_i,v_j) = \begin{cases} 
     \cup_{u=i}^{j-1} p(v_u,v_{u+1}  ) \ \ \ \text{if} \ \  i <j \\
-    \cup_{u=j}^{l} p(v_u,v_{u+1} ) \cup \cup_{u=1}^{i-1} p(v_u.v_{u+1}  ) \ \ \text{otherwise}
+    \cup_{u=j}^{l} p(v_u,v_{u+1} ) \cup ( \cup_{u=1}^{i-1} p(v_u.v_{u+1}  ) ) \ \ \text{otherwise}
     \end{cases}
 \end{equation} 
-Where $ v_{l+i} = v_i $ in above equation. 
+Where $ v_{l+i} = v_i $ in above equation. If $l=11$, then $a_2, c_2, d=0$. So $v_1v_3 ... v_l$ has length at most $2a_1+2c$ and so $a_1 \geq 4$, where $a_1$ is the number of triangle faces sharing an edge with $v_1v_3,..,v_l$. In fact, just as in the 10 approx case $v_1 v_3 ... v_l$ must be particular. 
+Let $v_j t_j v_{j+1}, v_k t_k v_{k+1}, v_r t_r v_{r+1}$ be 3 different $a'_1 $ faces of length 3 that have an edge on $v_1v_3 ... v_l$ that are not $v_1 v_2 v_3$. If any 2 distinct $ q,r \in \{ j,k,r \} $ satisfy $|q-r| \neq 3 \ \ \text{mod} l$ then $ p(v_{q-1}, v_q) \cup p(v_q,v_{q+1}) \cup p(v_{q+1},v_{q+2}), p(v_{r-1}, v_r) \cup p(v_r,v_{r+1}) \cup p(v_{r+1},v_{r+2})$ are disjoint and each contain at most 2 hit nodes. The remaining 5 pieces not containing vertices of  $ p(v_{q-1}, v_q) \cup p(v_q,v_{q+1}) \cup p(v_{q+1},v_{q+2}), p(v_{r-1}, v_r) \cup p(v_r,v_{r+1}) \cup p(v_{r+1},v_{r+2})$  contain at most 5 hit nodes. Thus $C$ contains at most 9 hit nodes. 
 
+Finally suppose $l=10$, then $a_2+c_2+d \leq 1$.  The length $l-1$ of $v_1v_3,..,v_l$ is at most $2a_1+a_2+2c+d$ and so $a_1 \geq 3$. At most one of the $a'_1$ neighbours of $v_1v_3,..,v_l$ of $v_1v_3,..,v_l$ in $G^*_2$ follows an $a'_2$ or $c'_2$ node in the clockwise order and at most one of them is $v_1v_2 v_3$ in $G_2$. Let $v_jt v_{j+1}$ be an $a'_1$ face  of $v_1v_3,..,v_l$ in $G_2$ that does not follow an $a'_2$ or $c'_2$ node, then by remark \ref{consecutive}  $p(v_{q-1}, v_q) \cup p(v_q,v_{q+1}) \cup p(v_{q+1},v_{q+2})$ contains at most 2 hit nodes and the remaining 7 pieces of $C$ not including nodes of $p(v_{q-1}, v_q) \cup p(v_q,v_{q+1}) \cup p(v_{q+1},v_{q+2})$ contain at most 7 hit nodes. So $C$ has at most 9 hit nodes.
+% note we have not proven that an a_1 neighbour cannot follow a a neighbour may have to change the proof for that.
 %\p case 1a
-Case 1a). Vertices $v_1, v_2$ are both incident to 3 faces of $G_2$. We claim that there are at most 3 hit nodes in $p(v_l,v_1) \cup p(v_1, v_2) \cup p(v_2,v_3) \cup p(v_3,v_4)$.
-Assume not then each of $p(v_l,v_1) , p(v_1, v_2) , p(v_2,v_3) , p(v_3,v_4)$ contains a hit node, and one of $p(v_2,v_4) \backslash \{v_2 \} , p(v_l,v_2) \backslash \{v_2 \}$  contains 2 hit nodes. By symmetry assume $p(v_2,v_4) \backslash \{v_2 \}$ contains 2 hit nodes. Let $u$ be the node on $p(v_2,v_4) \backslash \{ v_2 \} $  closest to $ v_2$. Now consider the witness cycle $C_u$ of $u$ and consider a subpath $P$ of $ C_u$ lying in $  C $ and let $P'$ be the portion of $P$ starting at $u$ not headed towards $v_2$ $P'$ cannot go to $v_4$ since $p(v_2,v_4) \backslash \{v_2 \}$  contains 2 hit nodes $ p(v_3,v_4) \backslash v_3 $ contains a hit node. So after reaching $v_3$ $P'$ must head towards $ v_1 $ since $p(v_l,v_1) , p(v_1, v_2)$ each contain a hit node $P'$ hits another hit node besides $u$ which is a contradiction.
-Let $ f_1,f_2 , a_1, a_2, b,c , d $ be as in lemma \ref{even reduced+}. So we have that $ l \leq 11- a_2 -  2 \lfloor 0.5 c \rfloor -d -2b $  if $l \leq 10 $ then % since each piece is single there are at most 5 nodes on $ ( \cup_{i=5}^l p(v_{i-1},v_i )  ) \backslash v_5,v_l $, and 
-since there are at most 3 nodes on $p(v_l,v_1) \cup p(v_1, v_2) \cup p(v_2,v_3) \cup p(v_3,v_4)$  there are at most 9 nodes on $C$. So $a_2 +  2 \lfloor 0.5 c \rfloor +d +2b \leq 1 $
 
-From $l \leq 2a_1+a_2+2c+d$  we get $a_1 \geq 4$ with 3 of the $a_1$ edges not being $v_1v_3$.  Let $ v_r v_{r+1}, v_w v_{w+1} $ be the next and previous $a_1$ edges from $ v_1, v_2 $ on $C$ in the clockwise order and let $ v_k v_{k+1}$ be the remaining $a_1$ edge so $ \{ v_{k-1}v_{k}, v_{k} v_{k+1}, v_{k+1} w_{k+2} \} \cap\{ v_lv_1, v_1v_2,v_2v_3, v_3v_4 \} = \emptyset$ by remark \ref{consecutive} we get 
-$ p'( v_{k-1}, v_{k+2} ) \cup p'( v_l , v_ 4 ) $ contains at most 5 hit nodes.
- Since $C \backslash p'( v_{w-1}, v_{w+2} ) \cup p'( v_l , v_ 4 ) $ is contained in 4 pieces we get that $C$ contains at most 9 hit nodes. See Figure \ref{case1}.
- 
-%\p case 1b)
- Case 1b). Now suppose that one of $v_1, v_3$ is incident to more than 3 faces of $G_2$. Recall  $ l \leq 11- a_2 -2 \lfloor 0.5 c \rfloor -d  -b , 2a_1+a_2+2c+d +1  $.  If $l \leq 9$ we are done otherwise so $c \leq 1, \ \ a_2+b+d \leq 1$  $ a_1 \geq 3 $
  %so either i) $a_1 \geq 4$ % or ii) $a_1=3, \ \  a_2+d \geq 1 $ 
 %In case i) 
 Thus we can find an $a_1$ edge $ v_r v_{r+1}$  distinct from $v_1 v_3$ that is not proceeded or followed by a $c$ edge. Since  one of $v_1, v_3$ is incident to more than 3 faces of $G_2$ either one of $ v_l v_1 , v_3 v_4$ is an $a_2$ or $ c $ edge or one of $ v_1, v_3$ is a b face in $G_2^*$ which implies that neither $v_r   $ or $v_{r+1}$ can be a b-face  in $G_2^*$ . nor can $v_{r-1} v_r$ be an $a_2$ edge. Combined with $ v_r v_{r+1}$ is an $a_1$ edge we get that $v_r,v_{r+1}$ both have exactly 3 neighbours and by remark \ref{consecutive}  $p(v_{r-1}, v_{r+2} )$ contains at most 2 hit nodes and hence $C$ has at most 9 hit nodes. 
@@ -922,7 +919,7 @@ i) $a_1 \geq 4 $   $ c \leq 1, \ \ \ b=d=0 $, or \\ $ l \leq 9 $,   $a_2+ 2 \lfl
 
 \end{figure}
 %\p case 3a)
-Case 3a). We have $b = \lfloor 0.5c \rfloor = d = a_2 =0$. Then there are at least 4 $ a_1  $ edges and since $b=0$ each endpoint of an $a_1$ edge $v_i v_{i+1}$ has exactly 3 neighbours. Thus we can find 2 $a_1$ edges $ v_i v_{i+1} , v_j v_{j+1}$ with $i \neq j-2,j+2$.  Hence $m'(v_{i-1},v_{i+2} )$  , $m'(v_{i-1},v_{i+2} )$ each contain at most 2 hit nodes and hence $C_1$ contains at most 8 hit nodes. 
+Case 3a). We have $b = \lfloor 0.5c \rfloor = d = a_2 =0$. Then there are at least 4 $ a'_1  $ edges. Since $b=0$ each endpoint of an $a'_1$ edge $v_i v_{i+1}$ has exactly 3 neighbours. Thus we can find 2 $a'_1$ edges $ v_i v_{i+1} , v_j v_{j+1}$ with $i \neq j-2,j+2$.  Hence $m'(v_{i-1},v_{i+2} )$  , $m'(v_{i-1},v_{i+2} )$ each contain at most 2 hit nodes and hence $C_1$ contains at most 8 hit nodes. 
 
 %\ case 3b
 Case 3b).  We have $ b+d + a_2 + 2\lfloor 0.5c \rfloor \ =1 $ and $C_1$ has 9 pieces. Here we wish to show there is an $a_1$ edge with both endpoints having exactly 3 neighbours. If $b=1$, $a_2=d=0$ and from $l \leq 2a_1 + a_2 + c +d $  we get  there are at least 3 $a_1$ edges and the endpoints and thus for at least 1 $a_1$ edge $v_iv_{i+1}$ $v_i, v_{i+1}$  both (since they are not $b$ nodes ) have 3 neighbours.   If $d=1$ then $a_1 \geq 2$ and the endpoints of any $a_1$ edge have exactly 3 neighbours, since they are not $b$ nodes.  
